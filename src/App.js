@@ -1,32 +1,37 @@
 import './App.css';
-import {useState} from 'react'
-import { byCountry } from 'country-code-lookup';
+import {Fragment, useState} from 'react'
+import { ToggleFrom } from './components/Forms/ToggleFrom';
+// import Navbar from './components/Navbar/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Navbar from './components/Navbar/Navbar';
+import { WeatherCard } from './components/WeatherCard/weatherCard';
 
 function App() {
-  const [zip, setZip] = useState('');
-  const [country,setCountry]=useState('');
-  const handler=async(e)=>
+  const [getData, setGetData] = useState({});
+  const getByZip=async(iso2,zip)=>
   {
-    e.preventDefault();
-    const {iso2}=byCountry(country)
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},${iso2}&appid=c6b6521bbfa0ecfa8b508528f3f9823e`, {
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},${iso2}&units=metric&appid=c6b6521bbfa0ecfa8b508528f3f9823e`, {
       method: "GET"
     });
     const data=await res.json();
+    setGetData(data)
+  }
+
+  const getByLocation=async(location)=>
+  {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
+    const data = await response.json();
     console.log(data);
-    setZip('');
-    setCountry('');
+    setGetData(data)
   }
   return (
-    <div className="App-header">
-      <form onSubmit={handler}>
-        <lable>ZipCode</lable>
-        <input type={'text'} onChange={(e)=>setZip(e.target.value)} value={zip}/>
-        <label>Country</label>
-        <input type={'text'} onChange={(e)=>setCountry(e.target.value)} value={country}/>
-        <button>Submit</button>
-      </form>
-    </div>
+    <Fragment>
+      <Navbar/>
+      <div className="container">
+        <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/>
+        {Object.keys(getData).length!==0 && <WeatherCard data={getData}/>}
+      </div>
+    </Fragment>
   );
 }
 
