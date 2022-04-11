@@ -6,15 +6,11 @@ const LocationForm = (props) =>
     const [location, setLocation] = useState('');
     const [coordinates, setCoordinates] = useState([]);
     const [options, setOptions] = useState([]);
-    // const [state, setState] = useState('');
-    // const [country, setCountry] = useState('');
     const handler=(e)=>
     {
         e.preventDefault();
         props.onGet(location,coordinates);
         setLocation('');
-        // setState('');
-        // setCountry('');
     }
     const changeHandler=async(e)=>
     {
@@ -30,15 +26,8 @@ const LocationForm = (props) =>
             {options.length!==0 && <ul className='z-index'>
                 {options.map((ele,i)=><button key={i} onClick={()=>{setLocation(ele.place_name);setCoordinates(ele.center);setOptions([])}}>{ele.place_name}</button>)}
             </ul>}
-
-            <button className='btn btn-primary'>Submit</button>
             
-            {/* <label htmlFor='state' className="form-label">State</label>
-            <input id="state" type={'text'} className="form-control mb-3" onChange={(e)=>setState(e.target.value)} value={state}/>
-  
-            <label htmlFor='country' className="form-label">Country</label>
-            <input id="country" type={'text'} className="form-control mb-3" onChange={(e)=>setCountry(e.target.value)} value={country}/> */}
-  
+            <button className='btn btn-primary'>Submit</button>  
         </form>
     )
 }
