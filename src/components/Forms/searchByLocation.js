@@ -1,5 +1,6 @@
 import React from 'react'
 import {useState} from 'react';
+import classes from './location.module.css'
 
 const LocationForm = (props) => 
 {
@@ -25,10 +26,10 @@ const LocationForm = (props) =>
     return (
         <form onSubmit={handler} autoComplete={'off'}>
             <lable  htmlFor='location' className="form-label">Location</lable>
-            <input type={'text'} id="location" className="form-control mb-3" onChange={(e)=>{changeHandler(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
+            <input type={'text'} id="location" className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{changeHandler(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
             
-            {options.length!==0 && <ul className='z-index'>
-                {options.map((ele,i)=><button key={i} onClick={()=>{setLocation(ele.place_name);setCoordinates(ele.center);setOptions([])}}>{ele.place_name}</button>)}
+            {options.length!==0 && <ul className={`card ${classes['option-list']}`}>
+                {options.map((ele,i)=><div className='p-2' key={i} onClick={()=>{setLocation(ele.place_name);setCoordinates(ele.center);setOptions([])}}>{ele.place_name}</div>)}
             </ul>}
 
             <button className='btn btn-primary'>Submit</button>

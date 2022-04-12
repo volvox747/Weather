@@ -1,0 +1,6 @@
+.option-list{
+    padding: 0;
+}
+.option-list div:hover{
+    background-color: rgba(54, 53, 53, 0.275);
+}

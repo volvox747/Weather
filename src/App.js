@@ -78,6 +78,11 @@ function App()
         <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/>
         {isLoading===false && Object.keys(getData).length!==0 && <WeatherCard data={getData}/>}
         {isLoading===true && middleware}
+        <iframe className='py-5' width = "1100"
+        height = "500"
+        src = "https://embed.windy.com/embed2.html?lat=12.233&lon=79.563&detailLat=12.900&detailLon=80.221&width=650&height=450&zoom=6&level=surface&overlay=clouds&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
+        frameborder = "0"
+        title='radar' > </iframe>
       </div>
     </Fragment>
   );
