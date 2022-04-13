@@ -13,7 +13,7 @@ function App()
     <span className="visually-hidden">Loading...</span>
   </div>)
   const [getData, setGetData] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const getByZip=async(iso2,zip)=>
   {
     setIsLoading(true);

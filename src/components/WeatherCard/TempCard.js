@@ -1,44 +1,12 @@
 import React from 'react'
 import  classes  from "./TempCard.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloud,faSun,faMoon, faCloudMoon, faCloudMoonRain, faCloudSunRain, faCloudBolt, faCloudSun, faCloudRain, faCloudShowersHeavy } from '@fortawesome/free-solid-svg-icons';
-import { faSnowflake } from '@fortawesome/free-regular-svg-icons';
+import weatherIcon from '../../utilities';
 
 const TempCard = ({current,location,state,country,date}) => 
 {
-  let icon=null
-  if(current.weather[0].main==='Rain')
-  {
-    icon = faCloudShowersHeavy;
-  }
-  else if (current.weather[0].main === 'Drizzle')
-  {
-    icon=faCloudRain;
-  }
-  else if (current.weather[0].main === 'Thunderstorm')
-  {
-    icon=faCloudBolt
-  }
-  else if (current.weather[0].main === 'Snow')
-  {
-    icon=faSnowflake;
-  }
-  else if (current.weather[0].main === 'Clear' && current.weather[0].icon.slice(-1) === 'n')
-  {
-    icon=faMoon;
-  }
-  else if (current.weather[0].main === 'Clear' && current.weather[0].icon.slice(-1) === 'd')
-  {
-    icon=faSun;
-  }
-  else if (current.weather[0].main === 'Clouds' && current.weather[0].icon.slice(-1) === 'n')
-  {
-    icon=faCloudMoon;
-  }
-  else if (current.weather[0].main === 'Clouds' && current.weather[0].icon.slice(-1) === 'd')
-  {
-    icon=faCloudSun;
-  }
+  const icon = weatherIcon(current.weather[0]);
+
   return (
     <div className={` card pb-3 `}>
         <div className="card-header">
