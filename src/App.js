@@ -14,6 +14,7 @@ function App()
   </div>)
   const [getData, setGetData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [coord,setCoord]=useState([]);
   const getByZip=async(iso2,zip)=>
   {
     setIsLoading(true);
@@ -43,6 +44,7 @@ function App()
   const getByLocation=async(location,coordinates)=>
   {
     setIsLoading(true);
+    setCoord(coordinates);
     //$ Get the state code and country code using location name,state name and country name 
     // let response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location},${stateOfLocation},${country}&key=ecdad83f9a43466cb0d2ef5d24876161`);
     // const {results}=await response.json();
@@ -78,14 +80,15 @@ function App()
         <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/>
         {isLoading===false && Object.keys(getData).length!==0 && <WeatherCard data={getData}/>}
         {isLoading===true && middleware}
-        <iframe className='py-5' width = "1100"
-        height = "500"
-        src = "https://embed.windy.com/embed2.html?lat=12.233&lon=79.563&detailLat=12.900&detailLon=80.221&width=650&height=450&zoom=6&level=surface&overlay=clouds&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
+        {coord.length!==0 && <iframe className='py-5' width = "1100"
+        height = "600"
+        src = {`https://embed.windy.com/embed2.html?lat=${coord[1]}&lon=${coord[0]}&width=650&height=450&zoom=6&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`}
         frameborder = "0"
-        title='radar' > </iframe>
+        title='radar' > </iframe>}
       </div>
     </Fragment>
   );
 }
+
 
 export default App;
