@@ -9,7 +9,6 @@ export const WeatherCard = ({data}) => {
       <Fragment>
    {/* <div className='card p-4 w-50'> */}
         <TempCard  current={data.current} location={data.location} state={data.state} country={data.country} date={date}/>
-        <h3 className = 'pt-5 fs-1' > Daily Forecast </h3>
         {/* <div className='pb-5 d-flex'>
         {data.daily.slice(0,5).map((obj,index)=><DailyWeather key={index} i={index} daily={obj}/>)}
         </div> */}
