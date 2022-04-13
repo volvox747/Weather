@@ -14,7 +14,6 @@ export const WeatherCard = ({data}) => {
         {data.daily.slice(0,5).map((obj,index)=><DailyWeather key={index} i={index} daily={obj}/>)}
         </div> */}
         <DailyWeatherCard dailyWeather={data.daily.slice(0,5)}/>
-        <h3 className = 'fs-1' > Hourly Forecast </h3>
         {/* <div className='pb-5 d-flex'>
         {data.hourly.slice(1,6).map((obj,index)=><HourlyWeather key={index} i={index} hourly={obj}/>)}
         </div> */}

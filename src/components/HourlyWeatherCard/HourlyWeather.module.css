@@ -1,0 +1,17 @@
+.hour-card{
+        width: 130px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+}
+
+.element {
+    border-right: 1px solid grey;
+    /* padding: 0rem 0.8rem; */
+}
+
+.first {
+    font-weight: bold;
+}
