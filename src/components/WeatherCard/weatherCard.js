@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import DailyWeatherCard from '../DailyWeatherCard/DailyWeatherCard';
 import HourlyWeatherCard from '../HourlyWeatherCard/HourlyWeatherCard';
-import TempCard from './TempCard';
+import TempCard from '../CurrentWeather/TempCard';
 
 export const WeatherCard = ({data}) => {
   const date=new Date(data.current.dt*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
