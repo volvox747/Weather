@@ -77,7 +77,9 @@ function App()
     <Fragment>
       <Navbar/>
       <div className="container">
+        <div className='d-flex justify-content-center'>
         <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/>
+        </div>
         {isLoading===false && Object.keys(getData).length!==0 && <WeatherCard data={getData}/>}
         {isLoading===true && middleware}
         {coord.length!==0 && <iframe className='py-5' width = "1100"
