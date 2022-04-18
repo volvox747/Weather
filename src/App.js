@@ -1,5 +1,5 @@
 import './App.css';
-import {Fragment, useState} from 'react'
+import {Fragment, useState,useEffect} from 'react'
 import { ToggleFrom } from './components/Forms/ToggleFrom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from './components/Navbar/Navbar';
@@ -73,6 +73,28 @@ function App()
     });
     setIsLoading(false);
   }
+
+  const getCurrentLocWeather=async()=>{
+    setIsLoading(true);
+    let response = await fetch(`https://api.ipdata.co/?api-key=4825cba494257a270b1a4e24386c124042b61f8e54720ac8a4ed04ec`);
+    const {city,region,country_name,latitude,longitude}=await response.json();
+    response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
+    const {current,daily,hourly} = await response.json();
+    setGetData({
+      current,
+      daily,
+      hourly,
+      location: city,
+      state: region,
+      country:country_name
+    })
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    getCurrentLocWeather();
+  }, []);
+
   return (
     <Fragment>
       <Navbar/>
