@@ -74,7 +74,7 @@ function App()
     setIsLoading(false);
   }
 
-  const getCurrentLocWeather=async()=>{
+  const getWeatherThroughIP=async()=>{
     setIsLoading(true);
     let response = await fetch(`https://api.ipdata.co/?api-key=4825cba494257a270b1a4e24386c124042b61f8e54720ac8a4ed04ec`);
     const {city,region,country_name,latitude,longitude}=await response.json();
@@ -92,7 +92,7 @@ function App()
   }
 
   useEffect(() => {
-    getCurrentLocWeather();
+    getWeatherThroughIP();
   }, []);
 
   return (
