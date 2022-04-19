@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import classes from './DailyWeather.module.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import weatherIcon from '../../utilities';
+import {weatherIcon} from '../../utilities';
 
 const DailyWeather = ({daily,i}) => 
 {

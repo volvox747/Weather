@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import classes from './HourlyWeather.module.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import weatherIcon from '../../utilities';
+import {weatherIcon} from '../../utilities';
 
 
 const HourlyWeather = ({hourly,i}) => 

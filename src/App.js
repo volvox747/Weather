@@ -22,17 +22,18 @@ function App()
   const getByZip=async(iso2,zip)=>
   {
     setIsLoading(true);
-    //$ Get the place name and lat,log coordinates 
+    // Get the place name and lat,log coordinates 
     let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},${iso2}&units=metric&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {name,coord}=await res.json();
     
-    //$ Get the current,daily and hourly weather data 
+    // Get the current,daily and hourly weather data 
     res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly}=await res.json();
     
-    //$ Get the state and country names using openCast API
+    // Get the state and country names using openCast API
     res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coord.lat}+${coord.lon}&key=ecdad83f9a43466cb0d2ef5d24876161`)
     const {results}=await res.json();
+    
     setGetData({
       current,
       daily,
@@ -43,7 +44,7 @@ function App()
     })
     setIsLoading(false)
   }
-  
+  console.log(getData)
   // Function to get weather data based on location entered by the user 
   const getByLocation=async(location,coordinates)=>
   {
@@ -72,9 +73,7 @@ function App()
       current,
       daily,
       hourly,
-      location: city,
-      state: region,
-      country:country_name
+      location: city+", "+region+", "+country_name,
     })
     setIsLoading(false);
   }

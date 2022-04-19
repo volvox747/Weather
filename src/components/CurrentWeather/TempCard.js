@@ -1,7 +1,7 @@
 import React from 'react'
 // import  classes  from "./TempCard.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import weatherIcon from '../../utilities';
+import {weatherIcon} from '../../utilities';
 
 const TempCard = ({current,location,state,country,date}) => 
 {

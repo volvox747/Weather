@@ -50,4 +50,29 @@ const weatherIcon=(weather)=>
   return icon;
 }
 
-export default weatherIcon;
+const uvIndex=(uv) => 
+{
+  let uvi="";
+  if (uv <= 0 && uv >= 2)
+  {
+    uvi="Low";
+  }
+  else if (uv <= 3 && uv >= 5)
+  {
+    uvi="Moderate";
+  }
+  else if (uv <= 6 && uv >= 7)
+  {
+    uvi="High";
+  }
+  else if (uv <= 8 && uv >= 10)
+  {
+    uvi="Very High";
+  }
+  else
+  {
+    uvi="Extreme";
+  }
+  return uvi
+}
+export {weatherIcon,uvIndex};
