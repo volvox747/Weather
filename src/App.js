@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { WeatherCard } from './components/WeatherCard/WeatherCard';
 import TempCard from './components/CurrentWeather/TempCard';
 import WeatherInfo from './components/WeatherInfo/WeatherInfo';
+import DailyWeatherCard from './components/DailyWeatherCard/DailyWeatherCard';
+import HourlyWeatherCard from './components/HourlyWeatherCard/HourlyWeatherCard';
 
 
 function App() 
@@ -66,10 +68,14 @@ function App()
   // Function to get weather data based on users current IP address 
   const getWeatherThroughIP=async()=>{
     setIsLoading(true);
+    // get city,state,country name & geography coordinates from idata API
     let response = await fetch(`https://api.ipdata.co/?api-key=4825cba494257a270b1a4e24386c124042b61f8e54720ac8a4ed04ec`);
     const {city,region,country_name,latitude,longitude}=await response.json();
+    // get current, daily, hourly weather data using coordinates responded by ipdata API
     response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly} = await response.json();
+    // set the coordinates array which is used to locate the place on radar map
+    setCoord([longitude,latitude])
     setGetData({
       current,
       daily,
@@ -79,6 +85,7 @@ function App()
     setIsLoading(false);
   }
 
+  // calls getWeatherThroughIP function when the page renders for the first time
   useEffect(() => {
     getWeatherThroughIP();
   }, []);
@@ -86,27 +93,39 @@ function App()
   return (
     <Fragment>
       <section className={classes['current-weather']}>
-        <div className={classes.overlay}></div>
-        <div className='container'>
           <div className='row'>
-            <div className='col-md-8'>
-              <TempCard  current={getData.current} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
+            <div className=' col-xl-8 col-lg-7 col-md-6'>
+        {/* <div className={classes.overlay}></div> */}
+              {
+                isLoading===false && Object.keys(getData).length!==0 && 
+                <TempCard  current={getData.current} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
+              }
+              {
+                isLoading === true && middleware
+              }
             </div>
-            <div className='col-md-4'>
-              <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/>
-              <WeatherInfo data={getData}/>
+            <div className={`col-xl-4 col-lg-5 col-md-6 ${classes.glass} text-white`}>
+              <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/><hr/>
+              {
+                isLoading === false && Object.keys(getData).length !== 0 &&
+                <>
+                <WeatherInfo data={getData}/>
+                <hr/>
+                <DailyWeatherCard dailyWeather={getData.daily.slice(0,5)}/><hr/>
+                <HourlyWeatherCard hourlyWeather={getData.hourly.slice(1,6)}/>
+                </>
+              }
+              {
+                isLoading === true && middleware
+              }
             </div>
           </div>
-        </div>
       </section>
-      <div className="container">
-        <div className='d-flex justify-content-center'>
-        </div>
-        {isLoading===false && Object.keys(getData).length!==0 && <WeatherCard data={getData}/>}
+      <div className="position-relative">
+        {/* {isLoading===false && Object.keys(getData).length!==0 && <WeatherCard data={getData}/>} */}
         {isLoading===true && middleware}
-        {coord.length!==0 && <iframe className='py-5' width = "1100"
-        height = "600"
-        src = {`https://embed.windy.com/embed2.html?lat=${coord[1]}&lon=${coord[0]}&width=650&height=450&zoom=6&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`}
+        {coord.length!==0 && <iframe className={classes.iframe}
+        src = {`https://embed.windy.com/embed2.html?lat=${coord[1]}&lon=${coord[0]}&zoom=6&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`}
         frameborder = "0"
         title='radar' > </iframe>}
       </div>

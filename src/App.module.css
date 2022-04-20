@@ -1,5 +1,24 @@
+body{
+  overflow-x: hidden;
+}
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .current-weather{
   background-image: url('/public/overcast.jpg');
+  min-height: 100vh;
+  width: 100vw;
+}
+.iframe{
+  position:absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
   height: 100vh;
 }
 .overlay{
@@ -8,5 +27,27 @@
   left:0;
   right: 0;
   background:rgba(0, 0, 0, 0.5);
-  min-height: 700px;
+  height: 100vh;
 }
+.glass{
+  background: rgba(158, 158, 158, 0.49);
+  height: 100vh;
+  overflow-y:scroll;
+  backdrop-filter: blur(2px);
+  /* opacity: .4; */
+}
+
+
+@media(max-width:576px){
+  .glass{
+    height: auto;
+  }
+
+}
+/* @media(max-width:768px){
+  .glass{
+    height: 100vh;
+    overflow-y:scroll;
+  }
+
+} */

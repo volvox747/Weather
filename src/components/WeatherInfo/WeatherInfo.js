@@ -1,27 +1,32 @@
 import React from 'react'
 import { uvIndex } from '../../utilities'
+import {faArrowDown} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import {fa}
 
 const WeatherInfo = ({data}) => {
   
   const uvi=uvIndex(data.current.uvi)
   return (
-    <div className='card'>
-           <div className='card-body'>
-               <h4 className='card-title'>Weather Today in {data.location}</h4>
-                <div className='card=text pt-3'>
+    <div className=''>
+           <div className='card-body position-relative'>
+               <h4 className='card-title'>Weather Details</h4>
+                <div className='card-text pt-3'>
                   <h1 className='mb-0 display-3 '>{Math.round(data.current.feels_like)}&deg;</h1>
                   <p>Feels Like</p>
-                    <p>Humidity: {data.current.humidity}%</p>
-                  <hr></hr>
-                    <p>Visibility: {data.current.visibility/1000}km/h</p>
-                  <hr></hr>
-                    <p>Pressure: {data.current.pressure}</p>
-                  <hr></hr>
-                    <p>UV Index: {uvi}</p>
-                  <hr></hr>
-                    <p>Wind Speed: {Math.round(data.current.wind_speed)} km/h</p>
+                  <div>
+                    <p className='d-flex justify-content-between mb-4'>Humidity: <span>{data.current.humidity}%</span></p>
+                  
+                    <p className='d-flex justify-content-between mb-4'>Visibility: <span>{data.current.visibility/1000}km/h</span></p>
+                  
+                    <p className='d-flex justify-content-between mb-4'>Pressure: <span>{data.current.pressure}</span></p>
+                  
+                    <p className='d-flex justify-content-between mb-4'>UV Index: <span>{uvi}</span></p>
+                  
+                    <p className='d-flex justify-content-between'>Wind Speed: <span>{Math.round(data.current.wind_speed)} km/h</span></p>
+                  </div>
                 </div>
+                {/* < button className = {`btn btn-secondary offset-5 rounded-circle`}><FontAwesomeIcon icon={faArrowDown}/></button> */}
            </div>
        </div>
   )

@@ -9,8 +9,8 @@ const TempCard = ({current,location,state,country,date}) =>
   date=new Date(date*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
   return (
     <div className={`${classes['temp-card']} `}>
-        <div className="card-header">
-            <h5 className={` lead fs-3 pt-2`}>{location}{state!==undefined &&", "+state}{country!==undefined&&", "+country}</h5>
+        <div className="w-75">
+            <h5 className={` display-6`}>{location}{state!==undefined &&", "+state}{country!==undefined&&", "+country}</h5>
         </div>
         <div className='card-body'>
             <div className="card-text d-flex align-items-center">

@@ -1,5 +1,12 @@
 .temp-card{
     color: rgb(255 255 255);
-    position: absolute;
-    bottom: 10%;
+    margin-left: 3rem;
+    padding-top: 10rem;
+}
+
+
+@media(max-width:576px){
+    .temp-card{
+        padding: 5rem 0;
+    }
 }
