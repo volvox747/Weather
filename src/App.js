@@ -93,9 +93,9 @@ function App()
   return (
     <Fragment>
       <section className={classes['current-weather']}>
+              <div className={classes.overlay}></div>
           <div className='row'>
-            <div className=' col-xl-8 col-lg-7 col-md-6'>
-        {/* <div className={classes.overlay}></div> */}
+            <div className=' col-xl-8 col-lg-7 col-md-6 position-relative'>
               {
                 isLoading===false && Object.keys(getData).length!==0 && 
                 <TempCard  current={getData.current} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>

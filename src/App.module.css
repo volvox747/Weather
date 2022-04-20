@@ -34,7 +34,6 @@ body{
   height: 100vh;
   overflow-y:scroll;
   backdrop-filter: blur(2px);
-  /* opacity: .4; */
 }
 
 
