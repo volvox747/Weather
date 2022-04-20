@@ -1,9 +1,10 @@
-import './App.css';
+import classes from './App.module.css';
 import {Fragment, useState,useEffect} from 'react'
 import { ToggleFrom } from './components/Forms/ToggleFrom';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Navbar from './components/Navbar/Navbar';
 import { WeatherCard } from './components/WeatherCard/WeatherCard';
+import TempCard from './components/CurrentWeather/TempCard';
+import WeatherInfo from './components/WeatherInfo/WeatherInfo';
 
 
 function App() 
@@ -84,10 +85,22 @@ function App()
 
   return (
     <Fragment>
-      <Navbar/>
+      <section className={classes['current-weather']}>
+        <div className={classes.overlay}></div>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-8'>
+              <TempCard  current={getData.current} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
+            </div>
+            <div className='col-md-4'>
+              <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/>
+              <WeatherInfo data={getData}/>
+            </div>
+          </div>
+        </div>
+      </section>
       <div className="container">
         <div className='d-flex justify-content-center'>
-        <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/>
         </div>
         {isLoading===false && Object.keys(getData).length!==0 && <WeatherCard data={getData}/>}
         {isLoading===true && middleware}

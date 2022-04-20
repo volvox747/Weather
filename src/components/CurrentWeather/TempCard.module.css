@@ -1,4 +1,5 @@
-/* .imgHeight{
-    max-height: 15rem;
-    max-width: 35rem;
-} */
+.temp-card{
+    color: rgb(255 255 255);
+    position: absolute;
+    bottom: 10%;
+}
