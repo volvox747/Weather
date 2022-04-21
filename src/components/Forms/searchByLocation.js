@@ -11,12 +11,18 @@ const LocationForm = (props) =>
     // this state is used to display the autocomplete list
     const [options, setOptions] = useState([]);
     
+    const [error,setError]=useState(false);
     // form submit handler
     const handler=(e)=>
     {
         // to prevent the page from reloading
         e.preventDefault();
-        // passing the data to the weather data getter function 
+        if(location.trim.length===0 && coordinates.length===0)
+        {
+            setError(true);
+            return
+        } 
+        // passing the data to the weather data getter function
         props.onGet(location,coordinates);
         setLocation('');
     }
@@ -31,8 +37,8 @@ const LocationForm = (props) =>
     return (
         <form onSubmit={handler} autoComplete={'off'}>
             <lable  htmlFor='location' className="form-label">Location</lable>
-            <input type={'text'} id="location" className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{autoComplete(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
-            
+            <input type={'text'} id="location" className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{setError(false); autoComplete(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
+            {error===true && <p style={{color:'red'}}>Please enter location</p>}           
             {options.length!==0 && <ul className={`card text-dark ${classes['option-list']}`}>
                 {options.map((ele,i)=><div className='p-2' key={i} onClick={()=>{setLocation(ele.place_name);setCoordinates(ele.center);setOptions([])}}>{ele.place_name}</div>)}
             </ul>}

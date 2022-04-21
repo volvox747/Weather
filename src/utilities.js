@@ -5,7 +5,8 @@ import {
     faCloudBolt,
     faCloudSun,
     faCloudRain,
-    faCloudShowersHeavy
+    faCloudShowersHeavy,
+    faSmog
 } from '@fortawesome/free-solid-svg-icons';
 import {
     faSnowflake
@@ -35,7 +36,17 @@ const weatherIcon=(weather)=>
   else if (weather.main === 'Snow')
   {
     icon=faSnowflake;
-    url='rain.jpg';
+    url='mist.jpg';
+  }
+  else if (weather.main === 'Fog')
+  {
+    icon=faSmog;
+    url='smog.jpg';
+  }
+  else if (weather.main === 'Mist')
+  {
+    icon=faSmog;
+    url='mist.jpg';
   }
   else if (weather.main === 'Clear' && weather.icon.slice(-1) === 'n')
   {
