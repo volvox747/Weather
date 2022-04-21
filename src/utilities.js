@@ -63,17 +63,17 @@ const weatherIcon=(weather)=>
     icon=faCloudMoon;
     url='cloud-with-moon.jpg';
   }
-  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'd')
+  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'd' && weather.description !== 'overcast clouds')
   {
     icon=faCloudSun;
     url='few-clouds.jpg';
   }
-  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'n' && weather.description==='overcast clouds')
+  else if ( weather.icon.slice(-1) === 'n' && weather.description==='overcast clouds')
   {
     icon=faCloudMoon;
     url='overcast.jpg';
   }
-  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'd' && weather.description==='overcast clouds')
+  else if (weather.icon.slice(-1) === 'd' && weather.description==='overcast clouds')
   {
     icon=faCloudSun;
     url='overcast.jpg';
