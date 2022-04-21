@@ -5,7 +5,9 @@ import {weatherIcon} from '../../utilities';
 
 const TempCard = ({current,location,state,country,date}) => 
 {
+  // to get icon according to the weather description
   const [icon] = weatherIcon(current.weather[0]);
+  // convert the date obj to 24hr time
   date=new Date(date*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
   return (
     <div className={`${classes['temp-card']} `}>

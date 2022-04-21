@@ -6,7 +6,9 @@ import {weatherIcon} from '../../utilities';
 
 const HourlyWeather = ({hourly,i}) => 
 {
+  // to get icon according to the weather description
   const [icon] = weatherIcon(hourly.weather[0]);
+  // convert date obj imto 24 hr time format
   const date=new Date(hourly.dt*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
   return (
     <Fragment>

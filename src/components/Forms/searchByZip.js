@@ -3,11 +3,14 @@ import {useState} from 'react'
 import { byCountry } from 'country-code-lookup';
 export const ZipForm = (props) => 
 {
+    // to get the zip and country name
     const [zip, setZip] = useState('');
     const [country, setCountry] = useState('');
+    // passing the zip and country name to the api
     const handler=(e)=>
     {
         e.preventDefault();
+        // get the countru code with country name
         const {iso2}=byCountry(country)
         props.onGet(iso2,zip);
         setZip('');

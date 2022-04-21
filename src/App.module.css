@@ -7,11 +7,12 @@ body{
   box-sizing: border-box;
 }
 
+/* to set the bg img width and height */
 .current-weather{
-  /* background-image: url('/public/few-clouds.jpg'); */
   min-height: 100vh;
   width: 100vw;
 }
+/* to make the radar component responsive according to the screen size */
 .iframe{
   position:absolute;
   top: 0;
@@ -21,6 +22,7 @@ body{
   width: 100vw;
   height: 100vh;
 }
+/* to make a dark overlay to make the text display brighter */
 .overlay{
   position: absolute;
   top: 0;
@@ -29,6 +31,7 @@ body{
   background:rgba(0, 0, 0, 0.5);
   height: 100vh;
 }
+/* code to make element transparent and allow scroll */
 .glass{
   background: rgba(158, 158, 158, 0.49);
   height: 100vh;
@@ -36,7 +39,7 @@ body{
   backdrop-filter: blur(2px);
 }
 
-
+/* for mobile or small screens remove the scroll  */
 @media(max-width:576px){
   .glass{
     height: auto;

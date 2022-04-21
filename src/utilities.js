@@ -11,7 +11,8 @@ import {
     faSnowflake
 } from '@fortawesome/free-regular-svg-icons';
 
-
+// function for returning the concered icon and bg img,
+//  by passing weather description of current,daily & hourly's weather description
 const weatherIcon=(weather)=>
 {
     let icon =null;
@@ -69,6 +70,7 @@ const weatherIcon=(weather)=>
   return [icon,url];
 }
 
+// function to convert uvi digit to string
 const uvIndex=(uv) => 
 {
   let uvi="";
