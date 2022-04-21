@@ -6,7 +6,7 @@ import {weatherIcon} from '../../utilities';
 
 const HourlyWeather = ({hourly,i}) => 
 {
-  const icon = weatherIcon(hourly.weather[0]);
+  const [icon] = weatherIcon(hourly.weather[0]);
   const date=new Date(hourly.dt*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
   return (
     <Fragment>

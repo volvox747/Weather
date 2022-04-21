@@ -8,7 +8,7 @@ body{
 }
 
 .current-weather{
-  background-image: url('/public/overcast.jpg');
+  /* background-image: url('/public/few-clouds.jpg'); */
   min-height: 100vh;
   width: 100vw;
 }

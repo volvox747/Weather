@@ -5,7 +5,7 @@ import {weatherIcon} from '../../utilities';
 
 const DailyWeather = ({daily,i}) => 
 {
-  const icon=weatherIcon(daily.weather[0]);
+  const [icon]=weatherIcon(daily.weather[0]);
   const date=new Date(daily.dt*1000).toLocaleString('en-IN',{weekday:'short',day:'2-digit'});
   return (
     <Fragment>

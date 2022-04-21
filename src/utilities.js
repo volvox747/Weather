@@ -14,40 +14,59 @@ import {
 
 const weatherIcon=(weather)=>
 {
-    let icon =null
+    let icon =null;
+    let url="";
   if(weather.main==='Rain')
   {
     icon = faCloudShowersHeavy;
+    url='rain.jpg';
   }
   else if (weather.main === 'Drizzle')
   {
     icon=faCloudRain;
+    url='rain.jpg';
   }
   else if (weather.main === 'Thunderstorm')
   {
     icon=faCloudBolt
+    url='rain.jpg';
   }
   else if (weather.main === 'Snow')
   {
     icon=faSnowflake;
+    url='rain.jpg';
   }
   else if (weather.main === 'Clear' && weather.icon.slice(-1) === 'n')
   {
     icon=faMoon;
+    url='night-sky.jpg';
   }
   else if (weather.main === 'Clear' && weather.icon.slice(-1) === 'd')
   {
     icon=faSun;
+    url='clear-sky.jpg';
   }
   else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'n')
   {
     icon=faCloudMoon;
+    url='cloud-with-moon.jpg';
   }
   else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'd')
   {
     icon=faCloudSun;
+    url='few-clouds.jpg';
   }
-  return icon;
+  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'n' && weather.description==='overcast clouds')
+  {
+    icon=faCloudMoon;
+    url='overcast.jpg';
+  }
+  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'd' && weather.description==='overcast clouds')
+  {
+    icon=faCloudSun;
+    url='overcast.jpg';
+  }
+  return [icon,url];
 }
 
 const uvIndex=(uv) => 

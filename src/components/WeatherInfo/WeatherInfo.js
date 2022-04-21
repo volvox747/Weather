@@ -14,7 +14,7 @@ const WeatherInfo = ({data}) => {
                 <div className='card-text pt-3'>
                   <h1 className='mb-0 display-3 '>{Math.round(data.current.feels_like)}&deg;</h1>
                   <p>Feels Like</p>
-                  <div>
+                  <div className='px-2'>
                     <p className='d-flex justify-content-between mb-4'>Humidity: <span>{data.current.humidity}%</span></p>
                   
                     <p className='d-flex justify-content-between mb-4'>Visibility: <span>{data.current.visibility/1000}km/h</span></p>

@@ -33,7 +33,7 @@ const LocationForm = (props) =>
             <lable  htmlFor='location' className="form-label">Location</lable>
             <input type={'text'} id="location" className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{autoComplete(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
             
-            {options.length!==0 && <ul className={`card ${classes['option-list']}`}>
+            {options.length!==0 && <ul className={`card text-dark ${classes['option-list']}`}>
                 {options.map((ele,i)=><div className='p-2' key={i} onClick={()=>{setLocation(ele.place_name);setCoordinates(ele.center);setOptions([])}}>{ele.place_name}</div>)}
             </ul>}
 

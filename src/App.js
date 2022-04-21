@@ -2,6 +2,7 @@ import classes from './App.module.css';
 import {Fragment, useState,useEffect} from 'react'
 import { ToggleFrom } from './components/Forms/ToggleFrom';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { weatherIcon } from './utilities';
 import { WeatherCard } from './components/WeatherCard/WeatherCard';
 import TempCard from './components/CurrentWeather/TempCard';
 import WeatherInfo from './components/WeatherInfo/WeatherInfo';
@@ -13,12 +14,13 @@ function App()
 {
   // loading spinner jsx code
   const middleware=(
-  <div className="spinner-border text-primary" role="status">
+  <div className="spinner-border text-secondary" role="status">
     <span className="visually-hidden">Loading...</span>
   </div>)
   const [getData, setGetData] = useState({});
   // this state is triggered admist request and response of data
   const [isLoading, setIsLoading] = useState(false);
+  // used for mapping on radar
   const [coord,setCoord]=useState([]);
   
   // function to get weather data based on zip code and country entered by the user 
@@ -84,7 +86,13 @@ function App()
     })
     setIsLoading(false);
   }
-
+  
+  // change the background according to the weather description
+  let ans=[];
+  if (Object.keys(getData).length !== 0){
+    ans=weatherIcon(getData.current.weather[0])
+  }
+  
   // calls getWeatherThroughIP function when the page renders for the first time
   useEffect(() => {
     getWeatherThroughIP();
@@ -92,7 +100,7 @@ function App()
 
   return (
     <Fragment>
-      <section className={classes['current-weather']}>
+      <section style={{backgroundImage:`url(${ans[1]})`}} className={classes['current-weather']}>
               <div className={classes.overlay}></div>
           <div className='row'>
             <div className=' col-xl-8 col-lg-7 col-md-6 position-relative'>
