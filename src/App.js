@@ -129,8 +129,7 @@ function App()
             </div>
           </div>
       </section>
-      <div className="position-relative">
-        {/* {isLoading===false && Object.keys(getData).length!==0 && <WeatherCard data={getData}/>} */}
+      <div className="container position-relative my-5">
         {isLoading===true && middleware}
         {coord.length!==0 && <iframe className={classes.iframe}
         src = {`https://embed.windy.com/embed2.html?lat=${coord[1]}&lon=${coord[0]}&zoom=6&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`}
