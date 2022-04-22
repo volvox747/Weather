@@ -129,7 +129,7 @@ function App()
             </div>
           </div>
       </section>
-      <div className="position-relative">
+      <div className=" container position-relative my-5">
         {/* {isLoading===false && Object.keys(getData).length!==0 && <WeatherCard data={getData}/>} */}
         {isLoading===true && middleware}
         {coord.length!==0 && <iframe className={classes.iframe}

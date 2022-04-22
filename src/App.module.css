@@ -14,12 +14,8 @@ body{
 }
 /* to make the radar component responsive according to the screen size */
 .iframe{
-  position:absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100vw;
+  position:relative;
+  width: inherit;
   height: 100vh;
 }
 /* to make a dark overlay to make the text display brighter */
