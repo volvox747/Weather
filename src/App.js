@@ -3,7 +3,6 @@ import {Fragment, useState,useEffect} from 'react'
 import { ToggleFrom } from './components/Forms/ToggleFrom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { weatherIcon } from './utilities';
-import { WeatherCard } from './components/WeatherCard/WeatherCard';
 import TempCard from './components/CurrentWeather/TempCard';
 import WeatherInfo from './components/WeatherInfo/WeatherInfo';
 import DailyWeatherCard from './components/DailyWeatherCard/DailyWeatherCard';
