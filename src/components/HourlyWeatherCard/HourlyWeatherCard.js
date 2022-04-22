@@ -9,7 +9,7 @@ const HourlyWeatherCard = ({hourlyWeather}) => {
         <div className='card-text d-flex justify-content-evenly'>
         {hourlyWeather.map((obj,index)=><HourlyWeather key={index} i={index} hourly={obj}/>)}
         </div>
-        <button className='btn btn-primary'>Next 48 hours</button>
+        <button className='btn btn-secondary'>Next 48 hours</button>
     </div>
     </div>
   )

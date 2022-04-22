@@ -1,11 +1,9 @@
-import React from 'react'
 import { uvIndex } from '../../utilities'
-import {faArrowDown} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import {fa}
+
 
 const WeatherInfo = ({data}) => {
   
+  // to convert uvi digit to text
   const uvi=uvIndex(data.current.uvi)
   return (
     <div className=''>

@@ -5,13 +5,15 @@ import {
     faCloudBolt,
     faCloudSun,
     faCloudRain,
-    faCloudShowersHeavy
+    faCloudShowersHeavy,
+    faSmog
 } from '@fortawesome/free-solid-svg-icons';
 import {
     faSnowflake
 } from '@fortawesome/free-regular-svg-icons';
 
-
+// function for returning the concered icon and bg img,
+//  by passing weather description of current,daily & hourly's weather description
 const weatherIcon=(weather)=>
 {
     let icon =null;
@@ -34,7 +36,17 @@ const weatherIcon=(weather)=>
   else if (weather.main === 'Snow')
   {
     icon=faSnowflake;
-    url='rain.jpg';
+    url='mist.jpg';
+  }
+  else if (weather.main === 'Fog')
+  {
+    icon=faSmog;
+    url='smog.jpg';
+  }
+  else if (weather.main === 'Mist')
+  {
+    icon=faSmog;
+    url='mist.jpg';
   }
   else if (weather.main === 'Clear' && weather.icon.slice(-1) === 'n')
   {
@@ -51,17 +63,17 @@ const weatherIcon=(weather)=>
     icon=faCloudMoon;
     url='cloud-with-moon.jpg';
   }
-  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'd')
+  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'd' && weather.description !== 'overcast clouds')
   {
     icon=faCloudSun;
     url='few-clouds.jpg';
   }
-  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'n' && weather.description==='overcast clouds')
+  else if ( weather.icon.slice(-1) === 'n' && weather.description==='overcast clouds')
   {
     icon=faCloudMoon;
     url='overcast.jpg';
   }
-  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'd' && weather.description==='overcast clouds')
+  else if (weather.icon.slice(-1) === 'd' && weather.description==='overcast clouds')
   {
     icon=faCloudSun;
     url='overcast.jpg';
@@ -69,6 +81,7 @@ const weatherIcon=(weather)=>
   return [icon,url];
 }
 
+// function to convert uvi digit to string
 const uvIndex=(uv) => 
 {
   let uvi="";

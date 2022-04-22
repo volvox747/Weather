@@ -8,6 +8,7 @@ import TempCard from './components/CurrentWeather/TempCard';
 import WeatherInfo from './components/WeatherInfo/WeatherInfo';
 import DailyWeatherCard from './components/DailyWeatherCard/DailyWeatherCard';
 import HourlyWeatherCard from './components/HourlyWeatherCard/HourlyWeatherCard';
+import Radar from './components/Radar/Radar';
 
 
 function App() 
@@ -129,12 +130,12 @@ function App()
             </div>
           </div>
       </section>
-      <div className="container position-relative my-5">
+      <div className="container my-5">
+        <section>
+          <h2>Recent Searches</h2>
+        </section>
         {isLoading===true && middleware}
-        {coord.length!==0 && <iframe className={classes.iframe}
-        src = {`https://embed.windy.com/embed2.html?lat=${coord[1]}&lon=${coord[0]}&zoom=6&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`}
-        frameborder = "0"
-        title='radar' > </iframe>}
+        {coord.length!==0 && <Radar lat={coord[1]} lng={coord[0]}/>}
       </div>
     </Fragment>
   );

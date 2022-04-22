@@ -4,14 +4,13 @@ import LocationForm from "./searchByLocation";
 import { ZipForm } from "./searchByZip";
 export const ToggleFrom = (props) => 
 {
+  // to make the form toggle
   const [displayForm, setDisplayForm] = useState('location');  
+  
   return (
     <Fragment>
       <div className=" p-4">
-        <div
-          className="pb-4"
-          role="group"
-        >
+        <div className="pb-4" role="group">
           <input
             type="radio"
             className="form-check-input pe-2"
@@ -19,7 +18,7 @@ export const ToggleFrom = (props) =>
             id="btnradio1"
             value="location"
             onClick={(e) => setDisplayForm(e.target.value)}
-            // autocomplete="off"
+            autocomplete="off"
             checked={displayForm === "location" ? true : false}
           />
           <label className="form-check-label ps-2 pe-3" htmlFor="btnradio1">
@@ -31,7 +30,7 @@ export const ToggleFrom = (props) =>
             className="form-check-input"
             name="btnradio"
             id="btnradio2"
-            // autocomplete="off"
+            autocomplete="off"
             onClick={(e) => setDisplayForm(e.target.value)}
             value="zip"
           />
