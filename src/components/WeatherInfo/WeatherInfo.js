@@ -1,8 +1,9 @@
-import { uvIndex } from '../../utilities'
+import { metricFunction, uvIndex } from '../../utilities'
 
 
-const WeatherInfo = ({data}) => {
-  
+const WeatherInfo = ({data}) => 
+{
+ console.log('weather info'); 
   // to convert uvi digit to text
   const uvi=uvIndex(data.current.uvi)
   return (
@@ -10,7 +11,9 @@ const WeatherInfo = ({data}) => {
            <div className='card-body position-relative'>
                <h4 className='card-title'>Weather Details</h4>
                 <div className='card-text pt-3'>
-                  <h1 className='mb-0 display-3 '>{Math.round(data.current.feels_like)}&deg;</h1>
+                  <h1 className='mb-0 display-3 '>
+                    {(data.units==='\u00B0C' || data.units==='')?Math.round(data.current.feels_like):Math.round(metricFunction(data.current.feels_like,data.units))}&deg;
+                  </h1>
                   <p>Feels Like</p>
                   <div className='px-2'>
                     <p className='d-flex justify-content-between mb-4'>Humidity: <span>{data.current.humidity}%</span></p>

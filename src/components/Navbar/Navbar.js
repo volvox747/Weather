@@ -1,28 +1,28 @@
-import React from 'react'
+import {useState,useEffect} from 'react'
 
-const Navbar = () => {
+const Navbar = ({onUnitChange}) => {
+  const [unit, setUnit] = useState('');
+  console.log("nav");
+  useEffect(() => {
+    onUnitChange(unit)
+  }, [onUnitChange,unit]);
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div className="container">
-    <div className="navbar-brand">Navbar</div>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    {/* <div className="collapse navbar-collapse" id="navbarNav">
-      <ul className="navbar-nav">
-        <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="">Home</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">Features</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">Pricing</a>
-        </li>
-      </ul>
-    </div> */}
-  </div>
-</nav>
+    <nav className="navbar navbar-expand-lg navbar-dark">
+      <div className="container ms-5 ps-5">
+        <div className="navbar-brand">Weather.com</div>
+          <ul className="navbar-nav">
+            <li className="nav-item dropdown">
+              <div className="nav-link dropdown-toggle" id="degree" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {unit===''?'\u00B0C':unit}
+              </div>
+              <ul className="dropdown-menu" aria-labelledby="degree">
+                <li className='dropdown-item' onClick={(e)=>setUnit(e.currentTarget.innerHTML)}>&deg;C</li>
+                <li className="dropdown-item" onClick={(e)=>setUnit(e.currentTarget.innerText)}>&deg;F</li>
+              </ul>
+            </li>
+          </ul>
+      </div>
+    </nav>
   )
 }
 

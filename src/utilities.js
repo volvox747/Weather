@@ -58,7 +58,7 @@ const weatherIcon=(weather)=>
     icon=faSun;
     url='clear-sky.jpg';
   }
-  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'n')
+  else if (weather.main === 'Clouds' && weather.icon.slice(-1) === 'n' && weather.description !== 'overcast clouds')
   {
     icon=faCloudMoon;
     url='cloud-with-moon.jpg';
@@ -107,4 +107,18 @@ const uvIndex=(uv) =>
   }
   return uvi
 }
-export {weatherIcon,uvIndex};
+
+const metricFunction=(temp,unit)=>
+{
+  if (unit === '\u00B0C')
+  {
+    temp=(temp-32) * 5/9;
+  }
+  else if(unit === '\u00B0F')
+  {
+    temp = (temp* 9 / 5) + 32;
+  }
+  return temp;
+}
+
+export {weatherIcon,uvIndex,metricFunction};

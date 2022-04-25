@@ -1,5 +1,5 @@
 import classes from './App.module.css';
-import {Fragment, useState,useEffect} from 'react'
+import {Fragment, useState,useEffect, useCallback} from 'react'
 import { ToggleFrom } from './components/Forms/ToggleFrom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { weatherIcon } from './utilities';
@@ -8,10 +8,12 @@ import WeatherInfo from './components/WeatherInfo/WeatherInfo';
 import DailyWeatherCard from './components/DailyWeatherCard/DailyWeatherCard';
 import HourlyWeatherCard from './components/HourlyWeatherCard/HourlyWeatherCard';
 import Radar from './components/Radar/Radar';
+import Navbar from './components/Navbar/Navbar';
 
 
 function App() 
 {
+  console.log("app");
   // loading spinner jsx code
   const middleware=(
   <div className="spinner-border text-secondary" role="status">
@@ -43,9 +45,8 @@ function App()
       current,
       daily,
       hourly,
-      location:name,
-      state: results[0].components.state,
-      country: results[0].components.country
+      location: name + ", " + results[0].components.state + ", " + results[0].components.country,
+      units: ''
     })
     setIsLoading(false)
   }
@@ -62,7 +63,8 @@ function App()
       location,
       current,
       daily,
-      hourly
+      hourly,
+      units: ''
     });
     setIsLoading(false);
   }
@@ -83,13 +85,14 @@ function App()
       daily,
       hourly,
       location: city+", "+region+", "+country_name,
+      units:''
     })
     setIsLoading(false);
   }
   
   // change the background according to the weather description
   let ans=[];
-  if (Object.keys(getData).length !== 0){
+  if (Object.keys(getData).length > 1){
     ans=weatherIcon(getData.current.weather[0])
   }
   
@@ -97,16 +100,32 @@ function App()
   useEffect(() => {
     getWeatherThroughIP();
   }, []);
-
   return (
     <Fragment>
       <section style={{backgroundImage:`url(${ans[1]})`}} className={classes['current-weather']}>
-              <div className={classes.overlay}></div>
+        <div className={classes.overlay}></div>
           <div className='row'>
             <div className=' col-xl-8 col-lg-7 col-md-6 position-relative'>
+              {/* <nav className="navbar navbar-expand-lg navbar-dark">
+                <div className="container ms-5 ps-5">
+                  <div className="navbar-brand">Weather.com</div>
+                    <ul className="navbar-nav">
+                      <li className="nav-item dropdown">
+                        <div defaultValue={45} className="nav-link dropdown-toggle" id="degree" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          &deg;C
+                        </div>
+                        <ul className="dropdown-menu" aria-labelledby="degree">
+                          <li><div className="dropdown-item">&deg;C</div></li>
+                          <li><div className="dropdown-item">&deg;F</div></li>
+                        </ul>
+                      </li>
+                    </ul>
+                </div>
+              </nav> */}
+              <Navbar onUnitChange={useCallback((unit)=>setGetData((prevState)=>{return({...prevState,units:unit})}),[])} />
               {
-                isLoading===false && Object.keys(getData).length!==0 && 
-                <TempCard  current={getData.current} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
+                isLoading===false && Object.keys(getData).length>1 && 
+                <TempCard  current={getData.current} unit={getData.units} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
               }
               {
                 isLoading === true && middleware
@@ -115,12 +134,12 @@ function App()
             <div className={`col-xl-4 col-lg-5 col-md-6 ${classes.glass} text-white`}>
               <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/><hr/>
               {
-                isLoading === false && Object.keys(getData).length !== 0 &&
+                isLoading === false && Object.keys(getData).length > 1 &&
                 <>
                 <WeatherInfo data={getData}/>
                 <hr/>
-                <DailyWeatherCard dailyWeather={getData.daily.slice(0,5)}/><hr/>
-                <HourlyWeatherCard hourlyWeather={getData.hourly.slice(1,6)}/>
+                <DailyWeatherCard dailyWeather={getData.daily.slice(0,5)} unit={getData.units}/><hr/>
+                <HourlyWeatherCard hourlyWeather={getData.hourly.slice(1,6)} unit={getData.units}/>
                 </>
               }
               {
