@@ -106,44 +106,24 @@ function App()
         <div className={classes.overlay}></div>
           <div className='row'>
             <div className=' col-xl-8 col-lg-7 col-md-6 position-relative'>
-              {/* <nav className="navbar navbar-expand-lg navbar-dark">
-                <div className="container ms-5 ps-5">
-                  <div className="navbar-brand">Weather.com</div>
-                    <ul className="navbar-nav">
-                      <li className="nav-item dropdown">
-                        <div defaultValue={45} className="nav-link dropdown-toggle" id="degree" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          &deg;C
-                        </div>
-                        <ul className="dropdown-menu" aria-labelledby="degree">
-                          <li><div className="dropdown-item">&deg;C</div></li>
-                          <li><div className="dropdown-item">&deg;F</div></li>
-                        </ul>
-                      </li>
-                    </ul>
-                </div>
-              </nav> */}
               <Navbar onUnitChange={useCallback((unit)=>setGetData((prevState)=>{return({...prevState,units:unit})}),[])} />
               {
-                isLoading===false && Object.keys(getData).length>1 && 
+                (isLoading===false && Object.keys(getData).length>1) ? 
                 <TempCard  current={getData.current} unit={getData.units} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
-              }
-              {
-                isLoading === true && middleware
+                :middleware
               }
             </div>
             <div className={`col-xl-4 col-lg-5 col-md-6 ${classes.glass} text-white`}>
               <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/><hr/>
               {
-                isLoading === false && Object.keys(getData).length > 1 &&
+                (isLoading === false && Object.keys(getData).length > 1)?
                 <>
                 <WeatherInfo data={getData}/>
                 <hr/>
                 <DailyWeatherCard dailyWeather={getData.daily.slice(0,5)} unit={getData.units}/><hr/>
                 <HourlyWeatherCard hourlyWeather={getData.hourly.slice(1,6)} unit={getData.units}/>
                 </>
-              }
-              {
-                isLoading === true && middleware
+                :middleware
               }
             </div>
           </div>

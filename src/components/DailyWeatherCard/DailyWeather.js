@@ -15,6 +15,7 @@ const DailyWeather = ({daily,i,unit}) =>
     <div className={`my-2  ${classes['daily-card']} ${i===0?classes.first:null}`}>
         <small className='fs-6'>{date}</small>
         <div className=' fs-3'>
+          {/* if units are celcius or by default an empty string display the data from the api else convert */}
           {(unit==='\u00B0C' || unit==='')?Math.round(daily.temp.max):Math.round(metricFunction(daily.temp.max,unit))}&deg;
           </div>
         <div className='text-white fs-5 pb-2'>

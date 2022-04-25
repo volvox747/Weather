@@ -48,6 +48,11 @@ const weatherIcon=(weather)=>
     icon=faSmog;
     url='mist.jpg';
   }
+  else if (weather.main === 'Haze')
+  {
+    icon=faSmog;
+    url='haze.jpg';
+  }
   else if (weather.main === 'Clear' && weather.icon.slice(-1) === 'n')
   {
     icon=faMoon;
