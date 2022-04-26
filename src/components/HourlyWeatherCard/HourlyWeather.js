@@ -6,7 +6,6 @@ import {metricFunction, weatherIcon} from '../../utilities';
 
 const HourlyWeather = ({hourly,i,unit}) => 
 {
-  console.log('each hourlyweather ');
   // to get icon according to the weather description
   const [icon] = weatherIcon(hourly.weather[0]);
   // convert date obj imto 24 hr time format

@@ -18,8 +18,8 @@ export const ToggleFrom = (props) =>
             id="btnradio1"
             value="location"
             onClick={(e) => setDisplayForm(e.target.value)}
-            autocomplete="off"
-            checked={displayForm === "location" ? true : false}
+            autoComplete="off"
+            defaultChecked={displayForm === "location" ? true : false}
           />
           <label className="form-check-label ps-2 pe-3" htmlFor="btnradio1">
             Search by Location
@@ -30,7 +30,7 @@ export const ToggleFrom = (props) =>
             className="form-check-input"
             name="btnradio"
             id="btnradio2"
-            autocomplete="off"
+            autoComplete="off"
             onClick={(e) => setDisplayForm(e.target.value)}
             value="zip"
           />

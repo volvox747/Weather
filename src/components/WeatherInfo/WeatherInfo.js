@@ -3,7 +3,6 @@ import { metricFunction, uvIndex } from '../../utilities'
 
 const WeatherInfo = ({data}) => 
 {
- console.log('weather info'); 
   // to convert uvi digit to text
   const uvi=uvIndex(data.current.uvi)
   return (

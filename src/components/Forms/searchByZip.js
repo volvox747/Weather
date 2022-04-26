@@ -37,7 +37,7 @@ export const ZipForm = (props) =>
     }
     return (
             <form onSubmit={handler}>
-                <lable htmlFor='zip' className="form-label">ZipCode</lable>
+                <label htmlFor='zip' className="form-label">ZipCode</label>
                 <input id="zip" type={'text'} className="form-control mb-3" onChange={(e)=>{setZipError(false);setZip(e.target.value)}} value={zip}/>
                 {zipError===true && <p style={{color:'red'}}>Please enter valid zipcode</p>}           
                 <label htmlFor='country' className="form-label">Country</label>

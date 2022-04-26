@@ -9,11 +9,11 @@ import DailyWeatherCard from './components/DailyWeatherCard/DailyWeatherCard';
 import HourlyWeatherCard from './components/HourlyWeatherCard/HourlyWeatherCard';
 import Radar from './components/Radar/Radar';
 import Navbar from './components/Navbar/Navbar';
+import ErrorModal from './components/ErrorModal/ErrorModal';
 
 
 function App() 
 {
-  console.log("app");
   // loading spinner jsx code
   const middleware=(
   <div className="spinner-border text-secondary" role="status">
@@ -24,6 +24,8 @@ function App()
   const [isLoading, setIsLoading] = useState(false);
   // used for mapping on radar
   const [coord,setCoord]=useState([]);
+
+  const [errorModal, setErrorModal] = useState(false);
   
   // function to get weather data based on zip code and country entered by the user 
   const getByZip=async(iso2,zip)=>
@@ -31,7 +33,16 @@ function App()
     setIsLoading(true);
     // Get the place name and lat,log coordinates 
     let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},${iso2}&units=metric&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
-    const {name,coord}=await res.json();
+    const data=await res.json();
+    console.log(data);
+    if(data.cod==='404')
+    {
+      console.log('Hi');
+      return setErrorModal(true);
+    }
+    console.log('Hello');
+    const {name,coord}=data;
+    console.log(coord);
     
     // Get the current,daily and hourly weather data 
     res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
@@ -45,7 +56,7 @@ function App()
       current,
       daily,
       hourly,
-      location: name + ", "+results[0].components.city+", " + results[0].components.state + ", " + results[0].components.country,
+      location: `${name}${results[0].components.city !== undefined? (", " + results[0].components.city):""}, ${results[0].components.state}, ${results[0].components.country}`,
       units: ''
     })
     setIsLoading(false)
@@ -100,13 +111,24 @@ function App()
   useEffect(() => {
     getWeatherThroughIP();
   }, []);
+
+const metricChange = useCallback((unit) => setGetData((prevState) => {
+  return ({
+    ...prevState,
+    units: unit
+  })
+}), [])
+
+
   return (
+    <>
+      {errorModal===true?<ErrorModal errorMsg={{cod:'404',message:"city not found"}}/>:
     <Fragment>
       <section style={{backgroundImage:`url(${ans[1]})`}} className={classes['current-weather']}>
         <div className={classes.overlay}></div>
           <div className='row'>
             <div className=' col-xl-8 col-lg-7 col-md-6 position-relative'>
-              <Navbar onUnitChange={useCallback((unit)=>setGetData((prevState)=>{return({...prevState,units:unit})}),[])} />
+              <Navbar onUnitChange={metricChange} />
               {
                 (isLoading===false && Object.keys(getData).length>1) ? 
                 <TempCard  current={getData.current} unit={getData.units} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
@@ -135,7 +157,8 @@ function App()
         {isLoading===true && middleware}
         {coord.length!==0 && <Radar lat={coord[1]} lng={coord[0]}/>}
       </div>
-    </Fragment>
+    </Fragment>}
+    </>
   );
 }
 

@@ -36,7 +36,7 @@ const LocationForm = (props) =>
     
     return (
         <form onSubmit={handler} autoComplete={'off'}>
-            <lable  htmlFor='location' className="form-label">Location</lable>
+            <label  htmlFor='location' className="form-label">Location</label>
             <input type={'text'} id="location" className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{setError(false); autoComplete(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
             {error===true && <p style={{color:'red'}}>Please enter location</p>}           
             {options.length!==0 && <ul className={`card text-dark ${classes['option-list']}`}>

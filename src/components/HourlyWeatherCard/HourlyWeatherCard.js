@@ -3,7 +3,6 @@ import HourlyWeather from './HourlyWeather'
 
 const HourlyWeatherCard = ({hourlyWeather,unit}) => 
 {
-  console.log('hourly weather card');
   return (
     <div className='mb-4'>
     <div className='pb-3 card-body'>

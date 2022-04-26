@@ -47,7 +47,6 @@ body{
 }
 @media(min-width:1200px){
   .glass{
-    padding-right:4rem !important;
-    /* padding-left:3rem !important; */
+    padding-right:1rem !important;
   }
 }

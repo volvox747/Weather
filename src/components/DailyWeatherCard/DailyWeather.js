@@ -5,7 +5,6 @@ import {metricFunction, weatherIcon} from '../../utilities';
 
 const DailyWeather = ({daily,i,unit}) => 
 {
-  console.log('each hourlyweather ');
   // to get icon according to the weather description
   const [icon]=weatherIcon(daily.weather[0]);
   // convert date obj to string format (eg: "Thu 22")

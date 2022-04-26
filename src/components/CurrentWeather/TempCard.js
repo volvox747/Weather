@@ -5,7 +5,6 @@ import {metricFunction, weatherIcon} from '../../utilities';
 
 const TempCard = ({current,location,state,country,date,unit}) => 
 {
-  console.log("tempcard");
   // to get icon according to the weather description
   const [icon] = weatherIcon(current.weather[0]);
   // convert the date obj to 24hr time
