@@ -9,7 +9,7 @@ export const ToggleFrom = (props) =>
   
   return (
     <Fragment>
-      <div className=" p-4">
+      <div className=" p-4 px-2">
         <div className="pb-4" role="group">
           <input
             type="radio"

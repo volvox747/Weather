@@ -45,7 +45,7 @@ function App()
       current,
       daily,
       hourly,
-      location: name + ", " + results[0].components.state + ", " + results[0].components.country,
+      location: name + ", "+results[0].components.city+", " + results[0].components.state + ", " + results[0].components.country,
       units: ''
     })
     setIsLoading(false)
@@ -129,9 +129,9 @@ function App()
           </div>
       </section>
       <div className="container my-5">
-        <section>
+        {/* <section>
           <h2>Recent Searches</h2>
-        </section>
+        </section> */}
         {isLoading===true && middleware}
         {coord.length!==0 && <Radar lat={coord[1]} lng={coord[0]}/>}
       </div>

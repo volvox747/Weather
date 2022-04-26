@@ -12,9 +12,9 @@ const TempCard = ({current,location,state,country,date,unit}) =>
   date=new Date(date*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
   return (
     <div className={`${classes['temp-card']} `}>
-        <div className="w-75">
+        {/* <div className="w-75"> */}
             <h5 className={` display-6`}>{location}</h5>
-        </div>
+        {/* </div> */}
         <div className='card-body'>
             <div className="card-text d-flex align-items-center">
               <span className='display-1 pe-3'>{(unit==='\u00B0C' || unit==='')?Math.round(current.temp):Math.round(metricFunction(current.temp,unit))}&deg;</span>
