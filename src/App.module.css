@@ -1,0 +1,52 @@
+body{
+  overflow-x: hidden;
+}
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* to set the bg img width and height */
+.current-weather{
+  min-height: 100vh;
+  width: 100vw;
+}
+/* to make the radar component responsive according to the screen size */
+.iframe{
+  position:relative;
+  width: inherit;
+  height: 80vh;
+}
+/* to make a dark overlay to make the text display brighter */
+.overlay{
+  position: absolute;
+  top: 0;
+  left:0;
+  right: 0;
+  background:rgba(0, 0, 0, 0.5);
+  height: 100vh;
+}
+/* code to make element transparent and allow scroll */
+.glass{
+  background: rgba(158, 158, 158, 0.5);
+  height: 100vh;
+  overflow-y:scroll;
+  backdrop-filter: blur(2px);
+  padding-right:3rem !important ;
+}
+
+/* for mobile or small screens remove the scroll  */
+@media(max-width:767.98px){
+  .glass{
+    backdrop-filter: blur(12px);
+    height: auto;
+    padding-right:3rem !important;
+    padding-left:3rem !important;
+  }
+}
+@media(min-width:1200px){
+  .glass{
+    padding-right:1rem !important;
+  }
+}

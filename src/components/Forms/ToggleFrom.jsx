@@ -4,39 +4,37 @@ import LocationForm from "./searchByLocation";
 import { ZipForm } from "./searchByZip";
 export const ToggleFrom = (props) => 
 {
+  // to make the form toggle
   const [displayForm, setDisplayForm] = useState('location');  
+  
   return (
     <Fragment>
-      <div className="card p-4 w-50 my-5">
-        <div
-          className="btn-group pb-4"
-          role="group"
-          aria-label="Basic radio toggle button group"
-        >
+      <div className=" p-4 px-2">
+        <div className="pb-4" role="group">
           <input
             type="radio"
-            className="btn-check"
+            className="form-check-input pe-2"
             name="btnradio"
             id="btnradio1"
             value="location"
             onClick={(e) => setDisplayForm(e.target.value)}
-            // autocomplete="off"
-            checked={displayForm === "location" ? true : false}
+            autoComplete="off"
+            defaultChecked={displayForm === "location" ? true : false}
           />
-          <label className="btn btn-outline-primary" htmlFor="btnradio1">
+          <label className="form-check-label ps-2 pe-3" htmlFor="btnradio1">
             Search by Location
           </label>
 
           <input
             type="radio"
-            className="btn-check"
+            className="form-check-input"
             name="btnradio"
             id="btnradio2"
-            // autocomplete="off"
+            autoComplete="off"
             onClick={(e) => setDisplayForm(e.target.value)}
             value="zip"
           />
-          <label className="btn btn-outline-primary" htmlFor="btnradio2">
+          <label className="form-check-label ps-2" htmlFor="btnradio2">
             Search by Zip
           </label>
         </div>

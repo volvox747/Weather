@@ -1,15 +1,16 @@
 import React from 'react'
 import HourlyWeather from './HourlyWeather'
 
-const HourlyWeatherCard = ({hourlyWeather}) => {
+const HourlyWeatherCard = ({hourlyWeather,unit}) => 
+{
   return (
-    <div className='card mb-4'>
+    <div className='mb-4'>
     <div className='pb-3 card-body'>
         <h4 className='card-title'>Hourly Forecast</h4>
         <div className='card-text d-flex justify-content-evenly'>
-        {hourlyWeather.map((obj,index)=><HourlyWeather key={index} i={index} hourly={obj}/>)}
+        {hourlyWeather.map((obj,index)=><HourlyWeather key={index} i={index} unit={unit} hourly={obj}/>)}
         </div>
-        <button className='btn btn-primary'>Next 48 hours</button>
+        <button className='btn btn-secondary'>Next 48 hours</button>
     </div>
     </div>
   )
