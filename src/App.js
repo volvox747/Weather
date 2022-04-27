@@ -25,7 +25,7 @@ function App()
   // used for mapping on radar
   const [coord,setCoord]=useState([]);
 
-  const [errorModal, setErrorModal] = useState(false);
+  const [errorModal, setErrorModal] = useState({boolean:false,errorData:{}});
   
   // function to get weather data based on zip code and country entered by the user 
   const getByZip=async(iso2,zip)=>
@@ -34,13 +34,12 @@ function App()
     // Get the place name and lat,log coordinates 
     let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},${iso2}&units=metric&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const data=await res.json();
-    console.log(data);
+    // API Error Handling
     if(data.cod==='404')
     {
-      console.log('Hi');
-      return setErrorModal(true);
+      return setErrorModal({boolean:true,errorData:data});
     }
-    console.log('Hello');
+    
     const {name,coord}=data;
     console.log(coord);
     
@@ -122,7 +121,8 @@ const metricChange = useCallback((unit) => setGetData((prevState) => {
 
   return (
     <>
-      {errorModal===true?<ErrorModal errorMsg={{cod:'404',message:"city not found"}}/>:
+    {
+      errorModal.boolean===true?<div className='d-flex align-items-center justify-content-center vh-100'><ErrorModal errorMsg={errorModal.errorData}/></div>:
     <Fragment>
       <section style={{backgroundImage:`url(${ans[1]})`}} className={classes['current-weather']}>
         <div className={classes.overlay}></div>
