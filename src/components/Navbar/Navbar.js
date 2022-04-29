@@ -1,12 +1,14 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect, memo} from 'react'
 
 const Navbar = ({onUnitChange}) => {
+  console.log('Navbar');
   const [unit, setUnit] = useState('');
   useEffect(() => {
+    console.log('Navbar changed');
     onUnitChange(unit)
   }, [onUnitChange,unit]);
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark">
+    <nav className="navbar navbar-expand-lg bg-primary navbar-dark" style={{zIndex:'1030'}}>
       <div className="container">
         <div className="navbar-brand" style={{fontSize:25}}>Weather.com</div>
           <ul className="navbar-nav">
@@ -25,4 +27,4 @@ const Navbar = ({onUnitChange}) => {
   )
 }
 
-export default Navbar
+export default memo(Navbar)
