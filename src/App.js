@@ -13,6 +13,7 @@ import ErrorModal from './components/ErrorModal/ErrorModal';
 import { Route, Routes } from 'react-router-dom';
 import TwoDayHourlyForecast from './components/HourlyWeatherCard/TwoDayHourlyForecast';
 import EightDayForecast from './components/DailyWeatherCard/EightDayForecast';
+import Footer from './components/Footer/Footer';
 
 
 function App() 
@@ -127,10 +128,10 @@ setGetData((prevState) => {
 
   return (
     <>
+    <Navbar onUnitChange={metricChange} />
     {
       errorModal.boolean===true?<div className='d-flex align-items-center justify-content-center vh-100'><ErrorModal errorMsg={errorModal.errorData}/></div>:
     <Fragment>
-      <Navbar onUnitChange={metricChange} />
       <Routes>
         <Route path='/' element=
         {
@@ -161,8 +162,8 @@ setGetData((prevState) => {
           </div>
       </section>
       <div className="container my-5">
-        {isLoading===true && middleware}
-        {coord.length!==0 && <Radar lat={coord[1]} lng={coord[0]}/>}
+        {(coord.length!==0 && getData.location!==undefined)? 
+        <><h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2><Radar lat={coord[1]} lng={coord[0]}/></>:middleware}
       </div>
       </>
       } />
@@ -171,6 +172,7 @@ setGetData((prevState) => {
       </Routes>
     </Fragment>
     }
+    <Footer />
     </>
   );
 }
