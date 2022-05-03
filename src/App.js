@@ -14,6 +14,7 @@ import { Route, Routes } from 'react-router-dom';
 import TwoDayHourlyForecast from './components/HourlyWeatherCard/TwoDayHourlyForecast';
 import EightDayForecast from './components/DailyWeatherCard/EightDayForecast';
 import Footer from './components/Footer/Footer';
+import ErrorToast from './components/ErrorToasts/ErrorToast';
 
 
 function App() 
@@ -30,7 +31,7 @@ function App()
   const [coord,setCoord]=useState([]);
   
   // console.log('App');
-  const [errorModal, setErrorModal] = useState({boolean:false,errorData:{}});
+  const [errorModal, setErrorModal] = useState();
   
   // function to get weather data based on zip code and country entered by the user 
   const getByZip=async(iso2,zip)=>
@@ -42,7 +43,8 @@ function App()
     // API Error Handling
     if(data.cod==='404')
     {
-      return setErrorModal({boolean:true,errorData:data});
+      setErrorModal({boolean:true,errorData:data});
+      return getWeatherThroughIP();
     }
     
     const {name,coord}=data;
@@ -87,7 +89,8 @@ function App()
     // get city,state,country name & geography coordinates from idata API
     let response = await fetch(`https://api.ipdata.co/?api-key=4825cba494257a270b1a4e24386c124042b61f8e54720ac8a4ed04ec`);
     const {city,region,country_name,latitude,longitude}=await response.json();
-    // console.log("Entering get by IP func");
+    // const data=await response.json();
+    // console.log(data);
     // get current, daily, hourly weather data using coordinates responded by ipdata API
     response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly} = await response.json();
@@ -103,6 +106,7 @@ function App()
   }
   
   console.log(getData)
+  console.log(errorModal)
   // change the background according to the weather description
   let ans=[];
   if (Object.keys(getData).length > 1){
@@ -126,16 +130,15 @@ setGetData((prevState) => {
 [])
 
 
+
   return (
-    <>
-    <Navbar onUnitChange={metricChange} />
-    {
-      errorModal.boolean===true?<div className='d-flex align-items-center justify-content-center vh-100'><ErrorModal errorMsg={errorModal.errorData}/></div>:
     <Fragment>
+      <Navbar onUnitChange={metricChange} />
+      {errorModal && <ErrorToast errorMsg={errorModal.errorData} onCloseHandler={()=>setErrorModal(null)}/>}
       <Routes>
         <Route path='/' element=
         {
-        <>
+          <>
         <section style={{backgroundImage:`url(${ans[1]})`}} className={classes['current-weather']}>
           <div className='row position-relative'>
             <div className={classes.overlay}></div>
@@ -169,11 +172,16 @@ setGetData((prevState) => {
       } />
       <Route path='/hourly' element={<TwoDayHourlyForecast hourlyWeather={getData.hourly} location={getData.location} unit={getData.units}/>} />
       <Route path='/daily' element={<EightDayForecast dailyWeather={getData.daily} location={getData.location} unit={getData.units}/>} />
+      < Route path = '/*'
+      element = {
+        <div className = 'd-flex align-items-center justify-content-center vh-100' > 
+          <ErrorModal errorMsg = {{cod:404,message:"Page Not Found"}}/>
+        </div>
+      }/>
       </Routes>
+      <Footer />
     </Fragment>
-    }
-    <Footer />
-    </>
+
   );
 }
 
