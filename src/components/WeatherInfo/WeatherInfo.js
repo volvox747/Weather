@@ -1,8 +1,10 @@
+import { memo } from 'react';
 import { metricFunction, uvIndex } from '../../utilities'
 
 
 const WeatherInfo = ({data}) => 
 {
+  // console.log('Weather Info');
   // to convert uvi digit to text
   const uvi=uvIndex(data.current.uvi)
   return (
@@ -26,10 +28,9 @@ const WeatherInfo = ({data}) =>
                     <p className='d-flex justify-content-between'>Wind Speed: <span>{Math.round(data.current.wind_speed)} km/h</span></p>
                   </div>
                 </div>
-                {/* < button className = {`btn btn-secondary offset-5 rounded-circle`}><FontAwesomeIcon icon={faArrowDown}/></button> */}
            </div>
        </div>
   )
 }
 
-export default WeatherInfo
+export default memo(WeatherInfo)

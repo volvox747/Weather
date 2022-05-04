@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import classes from '../../App.module.css'
 
 const Radar = ({lat,lng}) => {
+  // console.log("Radar");
   return (
     <>
     <iframe className={classes.iframe}
@@ -12,4 +13,4 @@ const Radar = ({lat,lng}) => {
   )
 }
 
-export default Radar    
+export default memo(Radar)    

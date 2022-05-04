@@ -1,0 +1,15 @@
+.accordion-header{
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+}
+
+@media(min-width:576px){
+    .accordion-header {
+        width: inherit;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

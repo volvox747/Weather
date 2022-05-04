@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { memo } from 'react'
+import { Link } from 'react-router-dom';
 import DailyWeather from './DailyWeather';
 
 
 const DailyWeatherCard = ({dailyWeather,unit}) => 
 {
+  console.log('Main Daily Weather Card');
   return (
     <div className=' mb-4'>
     <div className='pb-3 card-body'>
@@ -11,10 +13,13 @@ const DailyWeatherCard = ({dailyWeather,unit}) =>
         <div className='card-text d-flex justify-content-evenly'>
           {dailyWeather.map((obj, index) => (<DailyWeather key={index} i={index} daily={obj} unit={unit} />))}
         </div>
-        <button className='btn btn-secondary'>Next 3 days</button>
+        <Link to={'/daily'}>
+          <button className = 'btn btn-secondary' > Next 3 days </button>
+        </Link>
+        
     </div>
     </div>
   );
 }
 
-export default DailyWeatherCard
+export default memo(DailyWeatherCard)

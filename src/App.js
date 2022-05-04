@@ -10,6 +10,10 @@ import HourlyWeatherCard from './components/HourlyWeatherCard/HourlyWeatherCard'
 import Radar from './components/Radar/Radar';
 import Navbar from './components/Navbar/Navbar';
 import ErrorModal from './components/ErrorModal/ErrorModal';
+import { Route, Routes } from 'react-router-dom';
+import TwoDayHourlyForecast from './components/HourlyWeatherCard/TwoDayHourlyForecast';
+import EightDayForecast from './components/DailyWeatherCard/EightDayForecast';
+import Footer from './components/Footer/Footer';
 
 
 function App() 
@@ -24,7 +28,8 @@ function App()
   const [isLoading, setIsLoading] = useState(false);
   // used for mapping on radar
   const [coord,setCoord]=useState([]);
-
+  
+  // console.log('App');
   const [errorModal, setErrorModal] = useState({boolean:false,errorData:{}});
   
   // function to get weather data based on zip code and country entered by the user 
@@ -55,12 +60,10 @@ function App()
       current,
       daily,
       hourly,
-      location: `${name}${results[0].components.city !== undefined? (", " + results[0].components.city):""}, ${results[0].components.state}, ${results[0].components.country}`,
-      units: ''
+      location: `${name}${results[0].components.city !== undefined? (", " + results[0].components.city):""}, ${results[0].components.state}, ${results[0].components.country}`
     })
     setIsLoading(false)
   }
-  console.log(getData)
   // Function to get weather data based on location entered by the user 
   const getByLocation=async(location,coordinates)=>
   {
@@ -74,7 +77,6 @@ function App()
       current,
       daily,
       hourly,
-      units: ''
     });
     setIsLoading(false);
   }
@@ -85,6 +87,7 @@ function App()
     // get city,state,country name & geography coordinates from idata API
     let response = await fetch(`https://api.ipdata.co/?api-key=4825cba494257a270b1a4e24386c124042b61f8e54720ac8a4ed04ec`);
     const {city,region,country_name,latitude,longitude}=await response.json();
+    // console.log("Entering get by IP func");
     // get current, daily, hourly weather data using coordinates responded by ipdata API
     response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly} = await response.json();
@@ -95,11 +98,11 @@ function App()
       daily,
       hourly,
       location: city+", "+region+", "+country_name,
-      units:''
     })
     setIsLoading(false);
   }
   
+  console.log(getData)
   // change the background according to the weather description
   let ans=[];
   if (Object.keys(getData).length > 1){
@@ -108,27 +111,35 @@ function App()
   
   // calls getWeatherThroughIP function when the page renders for the first time
   useEffect(() => {
+    // console.log("On mount");
     getWeatherThroughIP();
   }, []);
 
-const metricChange = useCallback((unit) => setGetData((prevState) => {
+const metricChange = useCallback((unit="") => 
+setGetData((prevState) => {
+  // console.log('App changed');
   return ({
     ...prevState,
     units: unit
   })
-}), [])
+}), 
+[])
 
 
   return (
     <>
+    <Navbar onUnitChange={metricChange} />
     {
       errorModal.boolean===true?<div className='d-flex align-items-center justify-content-center vh-100'><ErrorModal errorMsg={errorModal.errorData}/></div>:
     <Fragment>
-      <section style={{backgroundImage:`url(${ans[1]})`}} className={classes['current-weather']}>
-        <div className={classes.overlay}></div>
-          <div className='row'>
+      <Routes>
+        <Route path='/' element=
+        {
+        <>
+        <section style={{backgroundImage:`url(${ans[1]})`}} className={classes['current-weather']}>
+          <div className='row position-relative'>
+            <div className={classes.overlay}></div>
             <div className=' col-xl-8 col-lg-7 col-md-6 position-relative'>
-              <Navbar onUnitChange={metricChange} />
               {
                 (isLoading===false && Object.keys(getData).length>1) ? 
                 <TempCard  current={getData.current} unit={getData.units} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
@@ -151,13 +162,17 @@ const metricChange = useCallback((unit) => setGetData((prevState) => {
           </div>
       </section>
       <div className="container my-5">
-        {/* <section>
-          <h2>Recent Searches</h2>
-        </section> */}
-        {isLoading===true && middleware}
-        {coord.length!==0 && <Radar lat={coord[1]} lng={coord[0]}/>}
+        {(coord.length!==0 && getData.location!==undefined)? 
+        <><h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2><Radar lat={coord[1]} lng={coord[0]}/></>:middleware}
       </div>
-    </Fragment>}
+      </>
+      } />
+      <Route path='/hourly' element={<TwoDayHourlyForecast hourlyWeather={getData.hourly} location={getData.location} unit={getData.units}/>} />
+      <Route path='/daily' element={<EightDayForecast dailyWeather={getData.daily} location={getData.location} unit={getData.units}/>} />
+      </Routes>
+    </Fragment>
+    }
+    <Footer />
     </>
   );
 }
