@@ -43,7 +43,7 @@ function App()
     // API Error Handling
     if(data.cod==='404')
     {
-      setErrorModal({boolean:true,errorData:data});
+      setErrorModal(data);
       return getWeatherThroughIP();
     }
     
@@ -89,8 +89,6 @@ function App()
     // get city,state,country name & geography coordinates from idata API
     let response = await fetch(`https://api.ipdata.co/?api-key=4825cba494257a270b1a4e24386c124042b61f8e54720ac8a4ed04ec`);
     const {city,region,country_name,latitude,longitude}=await response.json();
-    // const data=await response.json();
-    // console.log(data);
     // get current, daily, hourly weather data using coordinates responded by ipdata API
     response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly} = await response.json();
@@ -106,7 +104,7 @@ function App()
   }
   
   console.log(getData)
-  console.log(errorModal)
+
   // change the background according to the weather description
   let ans=[];
   if (Object.keys(getData).length > 1){
@@ -115,13 +113,11 @@ function App()
   
   // calls getWeatherThroughIP function when the page renders for the first time
   useEffect(() => {
-    // console.log("On mount");
     getWeatherThroughIP();
   }, []);
 
 const metricChange = useCallback((unit="") => 
 setGetData((prevState) => {
-  // console.log('App changed');
   return ({
     ...prevState,
     units: unit
@@ -134,7 +130,7 @@ setGetData((prevState) => {
   return (
     <Fragment>
       <Navbar onUnitChange={metricChange} />
-      {errorModal && <ErrorToast errorMsg={errorModal.errorData} onCloseHandler={()=>setErrorModal(null)}/>}
+      {errorModal && <ErrorToast errorMsg={errorModal} onCloseHandler={()=>setErrorModal(null)}/>}
       <Routes>
         <Route path='/' element=
         {
@@ -164,7 +160,7 @@ setGetData((prevState) => {
             </div>
           </div>
       </section>
-      <div className="container my-5">
+      <div className="container mb-5">
         {(coord.length!==0 && getData.location!==undefined)? 
         <><h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2><Radar lat={coord[1]} lng={coord[0]}/></>:middleware}
       </div>
@@ -172,7 +168,7 @@ setGetData((prevState) => {
       } />
       <Route path='/hourly' element={<TwoDayHourlyForecast hourlyWeather={getData.hourly} location={getData.location} unit={getData.units}/>} />
       <Route path='/daily' element={<EightDayForecast dailyWeather={getData.daily} location={getData.location} unit={getData.units}/>} />
-      < Route path = '/*'
+      <Route path = '/*'
       element = {
         <div className = 'd-flex align-items-center justify-content-center vh-100' > 
           <ErrorModal errorMsg = {{cod:404,message:"Page Not Found"}}/>

@@ -11,7 +11,7 @@ const Navbar = ({onUnitChange}) => {
   return (
     <nav className="navbar navbar-expand-lg bg-primary navbar-dark" style={{zIndex:'1030'}}>
       <div className="container">
-        <NavLink to={'/'}> <div className="navbar-brand" style={{fontSize:25}}>Weather.com</div></NavLink>
+        <NavLink to={'/'}> <div className="navbar-brand" style={{fontSize:25}}>Weather Report</div></NavLink>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
