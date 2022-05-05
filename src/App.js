@@ -20,18 +20,19 @@ import ErrorToast from './components/ErrorToasts/ErrorToast';
 function App() 
 {
   // loading spinner jsx code
-  const middleware=(
-  <div className="spinner-border text-secondary" role="status">
+  const middleware=
+  (<div className="spinner-border text-primary" role="status">
     <span className="visually-hidden">Loading...</span>
   </div>)
+
   const [getData, setGetData] = useState({});
   // this state is triggered admist request and response of data
   const [isLoading, setIsLoading] = useState(false);
   // used for mapping on radar
-  const [coord,setCoord]=useState([]);
+  const [coordinates,setCoordinates]=useState([]);
   
   // console.log('App');
-  const [errorModal, setErrorModal] = useState();
+  const [errorAlert, setErrorAlert] = useState();
   
   // function to get weather data based on zip code and country entered by the user 
   const getByZip=async(iso2,zip)=>
@@ -46,7 +47,7 @@ function App()
     if(data.cod==='404')
     {
       // displays alert message when error occurs
-      setErrorModal(data);
+      setErrorAlert(data);
       // reloads the page by getting the current location weather using IP address
       return getWeatherThroughIP();
     }
@@ -54,14 +55,14 @@ function App()
     // destructuring name and coordinates from the response object from openweather API
     const {name,coord}=data;
     // set coordionated for Radar
-    setCoord([coord.lat,coord.lon]);
+    setCoordinates([coord.lat,coord.lon]);
     
     // Get the current,daily and hourly weather data 
-    res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
+    res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly}=await res.json();
     
     // Get the state and country names using openCast API
-    res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coord.lat}+${coord.lon}&key=ecdad83f9a43466cb0d2ef5d24876161`)
+    res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coordinates.lat}+${coordinates.lon}&key=ecdad83f9a43466cb0d2ef5d24876161`)
     const {results}=await res.json();
     
     setGetData({
@@ -77,7 +78,7 @@ function App()
   const getByLocation=async(location,coordinates)=>
   {
     setIsLoading(true);
-    setCoord([coordinates[1],coordinates[0]]);
+    setCoordinates([coordinates[1],coordinates[0]]);
     //$ Get the current,daily and hourly weather data based on the coordinates found above 
     const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates[1]}&lon=${coordinates[0]}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly}=await response.json();
@@ -100,7 +101,7 @@ function App()
     response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly} = await response.json();
     // set the coordinates array which is used to locate the place on radar map
-    setCoord([latitude,longitude])
+    setCoordinates([latitude,longitude])
     setGetData({
       current,
       daily,
@@ -111,7 +112,7 @@ function App()
   }
   
   console.log(getData)
-  console.log(coord);
+  console.log(coordinates);
 
   // change the background according to the weather description
   let ans=[];
@@ -138,7 +139,7 @@ setGetData((prevState) => {
   return (
     <Fragment>
       <Navbar onUnitChange={metricChange} />
-      {errorModal && <ErrorToast errorMsg={errorModal} onCloseHandler={()=>setErrorModal(null)}/>}
+      {errorAlert && <ErrorToast errorMsg={errorAlert} onCloseHandler={()=>setErrorAlert(null)}/>}
       <Routes>
         <Route path='/' element=
         {
@@ -169,8 +170,8 @@ setGetData((prevState) => {
           </div>
       </section>
       <div className="container mb-5">
-        {(coord.length!==0 && getData.location!==undefined)? 
-        <><h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2><Radar lat={coord[0]} lng={coord[1]}/></>:middleware}
+        {(coordinates.length!==0 && getData.location!==undefined)? 
+        <><h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2><Radar lat={coordinates[0]} lng={coordinates[1]}/></>:middleware}
       </div>
       </>
       } />
