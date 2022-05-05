@@ -5,7 +5,6 @@ import DailyWeather from './DailyWeather';
 
 const DailyWeatherCard = ({dailyWeather,unit}) => 
 {
-  console.log('Main Daily Weather Card');
   return (
     <div className=' mb-4'>
     <div className='pb-3 card-body'>
@@ -14,7 +13,7 @@ const DailyWeatherCard = ({dailyWeather,unit}) =>
           {dailyWeather.map((obj, index) => (<DailyWeather key={index} i={index} daily={obj} unit={unit} />))}
         </div>
         <Link to={'/daily'}>
-          <button className = 'btn btn-secondary' > Next 3 days </button>
+          <button className = 'btn btn-primary' > Next 3 days </button>
         </Link>
         
     </div>

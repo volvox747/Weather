@@ -13,7 +13,7 @@ const HourlyWeatherCard = ({hourlyWeather,unit}) =>
         {hourlyWeather.map((obj,index)=><HourlyWeather key={index} i={index} unit={unit} hourly={obj}/>)}
         </div>
         <Link to={'/hourly'}>
-          <button className='btn btn-secondary'>Next 48 hours</button>
+          <button className='btn btn-primary'>Next 48 hours</button>
         </Link>
     </div>
     </div>
