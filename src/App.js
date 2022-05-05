@@ -79,7 +79,7 @@ function App()
   {
     setIsLoading(true);
     setCoordinates([coordinates[1],coordinates[0]]);
-    //$ Get the current,daily and hourly weather data based on the coordinates found above 
+    // Get the current,daily and hourly weather data based on the coordinates found above 
     const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates[1]}&lon=${coordinates[0]}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly}=await response.json();
     setGetData({
@@ -112,7 +112,6 @@ function App()
   }
   
   console.log(getData)
-  console.log(coordinates);
 
   // change the background according to the weather description
   let ans=[];

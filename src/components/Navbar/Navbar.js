@@ -2,10 +2,8 @@ import {useState,useEffect, memo} from 'react'
 import { NavLink } from 'react-router-dom';
 
 const Navbar = ({onUnitChange}) => {
-  console.log('Navbar');
   const [unit, setUnit] = useState('');
   useEffect(() => {
-    console.log('Navbar changed');
     onUnitChange(unit)
   }, [onUnitChange,unit]);
   return (
