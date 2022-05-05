@@ -1,8 +1,9 @@
-import classes from './App.module.css';
 import {Fragment, useState,useEffect, useCallback} from 'react'
 import { ToggleFrom } from './components/Forms/ToggleFrom';
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { weatherIcon } from './utilities';
+import { Route, Routes } from 'react-router-dom';
+import classes from './App.module.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import TempCard from './components/CurrentWeather/TempCard';
 import WeatherInfo from './components/WeatherInfo/WeatherInfo';
 import DailyWeatherCard from './components/DailyWeatherCard/DailyWeatherCard';
@@ -10,7 +11,6 @@ import HourlyWeatherCard from './components/HourlyWeatherCard/HourlyWeatherCard'
 import Radar from './components/Radar/Radar';
 import Navbar from './components/Navbar/Navbar';
 import ErrorModal from './components/ErrorModal/ErrorModal';
-import { Route, Routes } from 'react-router-dom';
 import TwoDayHourlyForecast from './components/HourlyWeatherCard/TwoDayHourlyForecast';
 import EightDayForecast from './components/DailyWeatherCard/EightDayForecast';
 import Footer from './components/Footer/Footer';
@@ -37,18 +37,24 @@ function App()
   const getByZip=async(iso2,zip)=>
   {
     setIsLoading(true);
+    
     // Get the place name and lat,log coordinates 
     let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},${iso2}&units=metric&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const data=await res.json();
+    
     // API Error Handling
     if(data.cod==='404')
     {
+      // displays alert message when error occurs
       setErrorModal(data);
+      // reloads the page by getting the current location weather using IP address
       return getWeatherThroughIP();
     }
-    
+
+    // destructuring name and coordinates from the response object from openweather API
     const {name,coord}=data;
-    console.log(coord);
+    // set coordionated for Radar
+    setCoord([coord.lat,coord.lon]);
     
     // Get the current,daily and hourly weather data 
     res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
@@ -64,13 +70,14 @@ function App()
       hourly,
       location: `${name}${results[0].components.city !== undefined? (", " + results[0].components.city):""}, ${results[0].components.state}, ${results[0].components.country}`
     })
+    // hides the loading spinner
     setIsLoading(false)
   }
   // Function to get weather data based on location entered by the user 
   const getByLocation=async(location,coordinates)=>
   {
     setIsLoading(true);
-    setCoord(coordinates);
+    setCoord([coordinates[1],coordinates[0]]);
     //$ Get the current,daily and hourly weather data based on the coordinates found above 
     const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates[1]}&lon=${coordinates[0]}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly}=await response.json();
@@ -93,7 +100,7 @@ function App()
     response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const {current,daily,hourly} = await response.json();
     // set the coordinates array which is used to locate the place on radar map
-    setCoord([longitude,latitude])
+    setCoord([latitude,longitude])
     setGetData({
       current,
       daily,
@@ -104,6 +111,7 @@ function App()
   }
   
   console.log(getData)
+  console.log(coord);
 
   // change the background according to the weather description
   let ans=[];
@@ -162,7 +170,7 @@ setGetData((prevState) => {
       </section>
       <div className="container mb-5">
         {(coord.length!==0 && getData.location!==undefined)? 
-        <><h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2><Radar lat={coord[1]} lng={coord[0]}/></>:middleware}
+        <><h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2><Radar lat={coord[0]} lng={coord[1]}/></>:middleware}
       </div>
       </>
       } />

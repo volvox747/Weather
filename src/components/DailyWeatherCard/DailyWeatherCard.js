@@ -5,7 +5,6 @@ import DailyWeather from './DailyWeather';
 
 const DailyWeatherCard = ({dailyWeather,unit}) => 
 {
-  console.log('Main Daily Weather Card');
   return (
     <div className=' mb-4'>
     <div className='pb-3 card-body'>

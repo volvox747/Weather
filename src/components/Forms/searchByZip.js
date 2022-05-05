@@ -15,19 +15,19 @@ export const ZipForm = (props) =>
     const handler=(e)=>
     {
         e.preventDefault();
-        if(zip.length === 0 && country.length===0)
+        if(zip.length === 0 && (country.length===0 || country==="No Result Found"))
         {
             console.log(zip.length,country);
             setZipError(true);
             setCountryError(true);
             return;
         }
-        else if (zip.length === 0 && country.length !== 0)
+        else if (zip.length === 0 && (country.length !== 0 || country === "No Result Found"))
         {
             setZipError(true);
             return;
         }
-        else if (zip.length !== 0 && country.length === 0)
+        else if (zip.length !== 0 && (country.length === 0 || country === "No Result Found"))
         {
             setCountryError(true);
             return;
@@ -40,9 +40,15 @@ export const ZipForm = (props) =>
     }
     // autoComplete function
     const autoComplete = async (e) => {
-        const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?types=place%2Cpostcode%2Caddress%2Ccountry%2Clocality%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiYmVuc29uY3I3IiwiYSI6ImNsMGgxbHBwNjAyb3Qzb28yYno4ZzA1YWYifQ.JP1IaQwIySVQy5JZ8--aVg`);
+        const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?types=country&autocomplete=true&access_token=pk.eyJ1IjoiYmVuc29uY3I3IiwiYSI6ImNsMGgxbHBwNjAyb3Qzb28yYno4ZzA1YWYifQ.JP1IaQwIySVQy5JZ8--aVg`);
         const data = await res.json();
-        setOptions(data.features)
+        console.log(data);
+        if(data.features.length===0 && data.query.length!==0)
+        {
+            // return setOptions([{place_name:"No Result Found"}])
+            setCountryError(true);
+        }
+        return setOptions(data.features)
     }
 
     return (
