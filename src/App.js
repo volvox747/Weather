@@ -21,7 +21,7 @@ function App()
 {
   // loading spinner jsx code
   const middleware=
-  (<div className="spinner-border text-primary" role="status">
+  (<div className="spinner-border text-primary" role="status" style={{margin:'10rem 0',width: '3rem',height: '3rem'}}>
     <span className="visually-hidden">Loading...</span>
   </div>)
 
@@ -74,6 +74,7 @@ function App()
     // hides the loading spinner
     setIsLoading(false)
   }
+
   // Function to get weather data based on location entered by the user 
   const getByLocation=async(location,coordinates)=>
   {
@@ -146,7 +147,7 @@ setGetData((prevState) => {
         <section style={{backgroundImage:`url(${ans[1]})`}} className={classes['current-weather']}>
           <div className='row position-relative'>
             <div className={classes.overlay}></div>
-            <div className=' col-xl-8 col-lg-7 col-md-6 position-relative'>
+            <div className={`col-xl-8 col-lg-7 col-md-6 position-relative ${isLoading===true&&classes.spinner}`}>
               {
                 (isLoading===false && Object.keys(getData).length>1) ? 
                 <TempCard  current={getData.current} unit={getData.units} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt}/>
@@ -155,6 +156,7 @@ setGetData((prevState) => {
             </div>
             <div className={`col-xl-4 col-lg-5 col-md-6 ${classes.glass} text-white`}>
               <ToggleFrom onGet={{zip:getByZip,loc:getByLocation}}/><hr/>
+              <div className={`${isLoading===true&&classes.spinner}`}>
               {
                 (isLoading === false && Object.keys(getData).length > 1)?
                 <>
@@ -165,10 +167,11 @@ setGetData((prevState) => {
                 </>
                 :middleware
               }
+              </div>
             </div>
           </div>
       </section>
-      <div className="container mb-5">
+      <div className={`container mb-5 ${isLoading===true&&classes.spinner}`}>
         {(coordinates.length!==0 && getData.location!==undefined)? 
         <><h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2><Radar lat={coordinates[0]} lng={coordinates[1]}/></>:middleware}
       </div>

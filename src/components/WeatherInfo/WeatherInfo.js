@@ -16,7 +16,7 @@ const WeatherInfo = ({data}) =>
                     {(data.units==='\u00B0C' || data.units==='')?Math.round(data.current.feels_like):Math.round(metricFunction(data.current.feels_like,data.units))}&deg;
                   </h1>
                   <p>Feels Like</p>
-                  <div className=''>
+                  <div className='pt-3'>
                     <p className='d-flex justify-content-between mb-4'>Humidity: <span>{data.current.humidity}%</span></p>
                   
                     <p className='d-flex justify-content-between mb-4'>Visibility: <span>{data.current.visibility/1000}km/h</span></p>
