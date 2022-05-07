@@ -32,27 +32,26 @@ export const ZipForm = (props) =>
             setCountryError(true);
             return;
         }
-        // get the countru code with country name
+        // get the country code with country name
         const {iso2}=byCountry(country)
         props.onGet(iso2,zip);
-        setZip('');
-        setCountry('');
+        // setZip(zip);
+        // setCountry(country);
     }
     // autoComplete function
     const autoComplete = async (e) => {
         const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?types=country&autocomplete=true&access_token=pk.eyJ1IjoiYmVuc29uY3I3IiwiYSI6ImNsMGgxbHBwNjAyb3Qzb28yYno4ZzA1YWYifQ.JP1IaQwIySVQy5JZ8--aVg`);
         const data = await res.json();
-        console.log(data);
         if(data.features.length===0 && data.query.length!==0)
         {
-            // return setOptions([{place_name:"No Result Found"}])
             setCountryError(true);
         }
         return setOptions(data.features)
     }
 
     return (
-            <form onSubmit={handler}>
+        <>
+            <form onSubmit={handler} className="d-inline">
                 <label htmlFor='zip' className="form-label">ZipCode</label>
                 <input id="zip" type={'text'} className="form-control mb-3" onChange={(e)=>{setZipError(false);setZip(e.target.value)}} value={zip}/>
                 {zipError===true && <p style={{color:'red'}}>Please enter valid zipcode</p>}           
@@ -70,7 +69,9 @@ export const ZipForm = (props) =>
                         }
                     </ul>
                 }
-                <button type='submit' className='btn btn-primary'>Submit</button>
+                <button type='submit' className='btn btn-primary me-3'>Submit</button>
             </form>
+            <button className='btn btn-danger d-inline' onClick={()=>{setCountry(''); setZip('');}}>Clear</button>
+        </>
     )
 }

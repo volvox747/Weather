@@ -7,6 +7,12 @@ body{
   box-sizing: border-box;
 }
 
+.spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* to set the bg img width and height */
 .current-weather{
   min-height: 100vh;
@@ -45,8 +51,8 @@ body{
     padding-left:3rem !important;
   }
 }
-@media(min-width:1200px){
+/* @media(min-width:1200px){
   .glass{
     padding-right:1rem !important;
   }
-}
+} */
