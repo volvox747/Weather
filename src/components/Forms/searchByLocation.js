@@ -24,7 +24,7 @@ const LocationForm = (props) =>
         } 
         // passing the data to the weather data getter function
         props.onGet(location,coordinates);
-        setLocation('');
+        // setLocation('');
     }
     // autoComplete function
     const autoComplete=async(e)=>
@@ -39,7 +39,8 @@ const LocationForm = (props) =>
     }
     
     return (
-        <form onSubmit={handler} autoComplete={'off'}>
+        <>
+        <form onSubmit={handler} className="d-inline" autoComplete={'off'}>
             <label  htmlFor='location' className="form-label">Location</label>
             <input type={'text'} id="location" className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{setError(false); autoComplete(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
             {error===true && <p style={{color:'red'}}>Please enter location</p>}           
@@ -47,8 +48,10 @@ const LocationForm = (props) =>
                 {options.map((ele,i)=><div className='p-2' key={i} onClick={()=>{setLocation(ele.place_name);setCoordinates(ele.center);setOptions([])}}>{ele.place_name}</div>)}
             </ul>}
 
-            <button className='btn btn-primary'>Submit</button>
+            <button className='btn btn-primary me-3'>Submit</button>
         </form>
+        <button className='btn btn-danger' onClick={()=>{setLocation('')}}>Clear</button>
+        </>
     )
 }
 

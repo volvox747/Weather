@@ -4,4 +4,5 @@
 }
 .option-list div:hover{
     background-color: rgba(54, 53, 53, 0.275);
+    cursor: pointer;
 }

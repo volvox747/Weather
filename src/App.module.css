@@ -51,8 +51,8 @@ body{
     padding-left:3rem !important;
   }
 }
-@media(min-width:1200px){
+/* @media(min-width:1200px){
   .glass{
     padding-right:1rem !important;
   }
-}
+} */

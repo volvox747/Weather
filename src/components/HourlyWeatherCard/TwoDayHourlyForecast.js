@@ -4,6 +4,7 @@ import Accordion from '../Accordion/Accordion';
 
 const TwoDayHourlyForecast = ({hourlyWeather,unit,location}) => 
 {
+  console.log("Two");
   return (
       <>
       <div className='bg-light'>

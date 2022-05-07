@@ -1,0 +1,6 @@
+.hoverBorder:hover{
+    background-color: rgb(255, 255, 255);
+    color:rgb(13, 110, 253) !important;
+    transition: 0.7s ease;
+    border-radius: 10px;
+}

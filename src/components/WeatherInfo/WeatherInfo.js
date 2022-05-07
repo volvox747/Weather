@@ -19,7 +19,7 @@ const WeatherInfo = ({data}) =>
                   <div className='pt-3'>
                     <p className='d-flex justify-content-between mb-4'>Humidity: <span>{data.current.humidity}%</span></p>
                   
-                    <p className='d-flex justify-content-between mb-4'>Visibility: <span>{data.current.visibility/1000}km/h</span></p>
+                    <p className='d-flex justify-content-between mb-4'>Visibility: <span>{Math.round(data.current.visibility/1000)} km/h</span></p>
                   
                     <p className='d-flex justify-content-between mb-4'>Pressure: <span>{data.current.pressure}</span></p>
                   
