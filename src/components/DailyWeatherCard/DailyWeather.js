@@ -3,12 +3,12 @@ import classes from './DailyWeather.module.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {metricFunction, weatherIcon} from '../../utilities';
 
-const DailyWeather = ({daily,i,unit}) => 
+const DailyWeather = ({daily,i,unit,timezone}) => 
 {
   // to get icon according to the weather description
   const [icon]=weatherIcon(daily.weather[0]);
   // convert date obj to string format (eg: "Thu 22")
-  const date=new Date(daily.dt*1000).toLocaleString('en-IN',{weekday:'short',day:'2-digit'});
+  const date=new Date(daily.dt*1000).toLocaleString('en-IN',{weekday:'short',day:'2-digit',timeZone:timezone});
   return (
     <Fragment>
     <div className={`my-2  ${classes['daily-card']} ${i===0?classes.first:null}`}>

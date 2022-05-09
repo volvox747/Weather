@@ -4,12 +4,12 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {metricFunction, weatherIcon} from '../../utilities';
 
 
-const HourlyWeather = ({hourly,i,unit}) => 
+const HourlyWeather = ({hourly,i,unit,timezone}) => 
 {
   // to get icon according to the weather description
   const [icon] = weatherIcon(hourly.weather[0]);
   // convert date obj imto 24 hr time format
-  const date=new Date(hourly.dt*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
+  const date=new Date(hourly.dt*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:timezone});
   return (
     <Fragment>
 

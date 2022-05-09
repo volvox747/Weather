@@ -56,13 +56,14 @@ function App() {
 
     // Get the current,daily and hourly weather data 
     res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
-    const { current, daily, hourly } = await res.json();
+    const { current, daily, hourly,timezone } = await res.json();
 
     // Get the state and country names using openCast API
     res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${coord.lat}+${coord.lon}&key=ecdad83f9a43466cb0d2ef5d24876161`)
     const { results } = await res.json();
 
     setGetData({
+      timezone,
       current,
       daily,
       hourly,
@@ -79,8 +80,9 @@ function App() {
     setCoordinates([coordinates[1], coordinates[0]]);
     // Get the current,daily and hourly weather data based on the coordinates found above 
     const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates[1]}&lon=${coordinates[0]}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
-    const { current, daily, hourly } = await response.json();
+    const { current, daily, hourly, timezone } = await response.json();
     setGetData({
+      timezone,
       location,
       current,
       daily,
@@ -98,10 +100,11 @@ function App() {
     const { city, region, country_name, latitude, longitude } = await response.json();
     // get current, daily, hourly weather data using coordinates responded by ipdata API
     response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
-    const { current, daily, hourly } = await response.json();
+    const { current, daily, hourly,timezone } = await response.json();
     // set the coordinates array which is used to locate the place on radar map
     setCoordinates([latitude, longitude])
     setGetData({
+      timezone,
       current,
       daily,
       hourly,
@@ -149,7 +152,7 @@ function App() {
                     {
                       (isLoading === false && Object.keys(getData).length > 1) ?
                       // display when the data is present
-                        <TempCard current={getData.current} unit={getData.units} location={getData.location} state={getData.state} country={getData.country} date={getData.current.dt} />
+                        <TempCard current={getData.current} unit={getData.units} location={getData.location} timezone={getData.timezone} date={getData.current.dt} />
                         // else check whether there is any error ,if not display the middleware
                         : errorAlert!==null ? <ErrorModal errorMsg={errorAlert} /> :middleware
                     }
@@ -163,8 +166,8 @@ function App() {
                           <>
                             <WeatherInfo data={getData} />
                             <hr />
-                            <DailyWeatherCard dailyWeather={getData.daily.slice(0, 5)} unit={getData.units} /><hr />
-                            <HourlyWeatherCard hourlyWeather={getData.hourly.slice(1, 6)} unit={getData.units} />
+                            <DailyWeatherCard dailyWeather={getData.daily.slice(0, 5)} timezone={getData.timezone} unit={getData.units} /><hr />
+                            <HourlyWeatherCard hourlyWeather={getData.hourly.slice(1, 6)} timezone={getData.timezone} unit={getData.units} />
                           </>
                           // else check whether there is any error ,if not display the middleware
                           : errorAlert!==null ? null : middleware
@@ -185,8 +188,8 @@ function App() {
               }
             </>
           } />
-        <Route path='/hourly' element={<TwoDayHourlyForecast hourlyWeather={getData.hourly} location={getData.location} unit={getData.units} />} />
-        <Route path='/daily' element={<EightDayForecast dailyWeather={getData.daily} location={getData.location} unit={getData.units} />} />
+        <Route path='/hourly' element={<TwoDayHourlyForecast hourlyWeather={getData.hourly} date={getData.current.dt} timezone={getData.timezone} location={getData.location} unit={getData.units} />} />
+        <Route path='/daily' element={<EightDayForecast dailyWeather={getData.daily} date={getData.current.dt} timezone={getData.timezone} location={getData.location} unit={getData.units} />} />
         <Route path='/*'
           element={
             <div className='d-flex align-items-center justify-content-center vh-100' >

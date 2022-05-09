@@ -13,16 +13,18 @@ import React from 'react'
 import { metricFunction, weatherIcon } from '../../utilities';
 import classes from './Accordion.module.css'
 
-const Accordion = ({data,index,unit}) => {
+const Accordion = ({data,index,unit,timezone}) => {
     const date = new Date(data.dt * 1000).toLocaleString('en-IN', {
         hour: '2-digit',
         minute: '2-digit',
-        hour12: false
+        hour12: false,
+        timeZone:timezone
     });
       const weekday = new Date(data.dt * 1000).toLocaleString('en-IN', {
           weekday: 'long',
           day:'2-digit',
-          month:'long'
+          month:'long',
+          timeZone:timezone
       });
   return (
       <>

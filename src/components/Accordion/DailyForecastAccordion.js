@@ -12,11 +12,12 @@ import React from 'react'
 import { metricFunction, weatherIcon } from '../../utilities';
 import classes from './Accordion.module.css'
 
-const DailyForecastAccordion = ({data,index,unit}) => {
+const DailyForecastAccordion = ({data,index,unit,timezone}) => {
     // converts unix format time to human readable weekday and date
       const date = new Date(data.dt * 1000).toLocaleString('en-IN', {
           weekday: 'short',
-          day: '2-digit'
+          day: '2-digit',
+          timeZone:timezone
       });
     // converts unix format time to human readable date
     // used for calculation time of sunrise, sunset, moonrise and moonset
@@ -25,7 +26,8 @@ const DailyForecastAccordion = ({data,index,unit}) => {
         const convertedTime = new Date(unixTime * 1000).toLocaleString('en-IN', {
             hour: '2-digit',
             minute: '2-digit',
-            hour12: false
+            hour12: false,
+            timeZone:timezone,
         });
         return convertedTime
       }

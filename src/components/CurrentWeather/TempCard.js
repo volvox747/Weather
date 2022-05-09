@@ -3,12 +3,12 @@ import  classes  from "./TempCard.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {metricFunction, weatherIcon} from '../../utilities';
 
-const TempCard = ({current,location,state,country,date,unit}) => 
+const TempCard = ({current,location,date,unit,timezone}) => 
 {
   // to get icon according to the weather description
   const [icon] = weatherIcon(current.weather[0]);
   // convert the date obj to 24hr time
-  date=new Date(date*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
+  date=new Date(date*1000).toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:timezone,timeZoneName:"short"});
   return (
     <div className={`${classes['temp-card']} `}>
         {/* <div className="w-75"> */}
