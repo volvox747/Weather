@@ -4,7 +4,7 @@ import Accordion from '../Accordion/Accordion';
 
 const TwoDayHourlyForecast = ({hourlyWeather,unit,date,location,timezone}) => 
 {
-  date = new Date(date * 1000).toLocaleString('en-IN', {
+  date = new Date(date.dt * 1000).toLocaleString('en-IN', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,

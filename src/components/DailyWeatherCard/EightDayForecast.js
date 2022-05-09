@@ -2,7 +2,7 @@ import React from 'react'
 import DailyForecastAccordion from '../Accordion/DailyForecastAccordion'
 
 const EightDayForecast = ({dailyWeather,location,date,unit,timezone}) => {
-  date = new Date(date * 1000).toLocaleString('en-IN', {
+  date = new Date(date.dt * 1000).toLocaleString('en-IN', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,

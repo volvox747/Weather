@@ -17,14 +17,12 @@ const LocationForm = (props) =>
     {
         // to prevent the page from reloading
         e.preventDefault();
-        if(location.trim.length===0 && coordinates.length===0)
+        if(location.trim.length===0)
         {
-            setError(true);
-            return
+            return setError(true);  
         } 
         // passing the data to the weather data getter function
         props.onGet(location,coordinates);
-        // setLocation('');
     }
     // autoComplete function
     const autoComplete=async(e)=>
@@ -43,10 +41,20 @@ const LocationForm = (props) =>
         <form onSubmit={handler} className="d-inline" autoComplete={'off'}>
             <label  htmlFor='location' className="form-label">Location</label>
             <input type={'text'} id="location" className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{setError(false); autoComplete(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
-            {error===true && <p style={{color:'red'}}>Please enter location</p>}           
-            {options.length!==0 && <ul className={`card text-dark ${classes['option-list']}`}>
-                {options.map((ele,i)=><div className='p-2' key={i} onClick={()=>{setLocation(ele.place_name);setCoordinates(ele.center);setOptions([])}}>{ele.place_name}</div>)}
-            </ul>}
+
+            {
+                error===true &&
+                // error message 
+                <p style={{color:'red'}}>Please enter location</p>
+            }
+
+            {
+                // if result length != to 0 display the result
+                options.length!==0 && 
+                <ul className={`card text-dark ${classes['option-list']}`}>
+                    {options.map((ele,i)=><div className='p-2' key={i} onClick={()=>{setLocation(ele.place_name);setCoordinates(ele.center);setOptions([])}}>{ele.place_name}</div>)}
+                </ul>
+            }
 
             <button className='btn btn-primary me-3'>Submit</button>
         </form>
