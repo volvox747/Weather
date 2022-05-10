@@ -42,11 +42,10 @@ function App() {
     const data = await res.json();
 
     // API Error Handling
-    if (data.cod === '404') {
+    if (data.cod === '404') 
+    {
       // displays alert message when error occurs
       return setErrorAlert(data);
-      // reloads the page by getting the current location weather using IP address
-      // return getWeatherThroughIP();
     }
 
     // destructuring name and coordinates from the response object from openweather API
@@ -96,19 +95,20 @@ function App() {
     setErrorAlert(null)
     setIsLoading(true);
     // get city,state,country name & geography coordinates from idata API
-    let response = await fetch(`https://api.ipdata.co/?api-key=4825cba494257a270b1a4e24386c124042b61f8e54720ac8a4ed04ec`);
-    const { city, region, country_name, latitude, longitude } = await response.json();
+    // let response = await fetch(`https://api.ipdata.co/?api-key=4825cba494257a270b1a4e24386c124042b61f8e54720ac8a4ed04ec`);
+    let response = await fetch(`http://ip-api.com/json`);
+    const { city, regionName, country, lat, lon } = await response.json();
     // get current, daily, hourly weather data using coordinates responded by ipdata API
-    response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
+    response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,alerts&appid=c6b6521bbfa0ecfa8b508528f3f9823e`);
     const { current, daily, hourly,timezone } = await response.json();
     // set the coordinates array which is used to locate the place on radar map
-    setCoordinates([latitude, longitude])
+    setCoordinates([lat, lon])
     setGetData({
       timezone,
       current,
       daily,
       hourly,
-      location: city + ", " + region + ", " + country_name,
+      location: city + ", " + regionName + ", " + country,
     })
     setIsLoading(false);
   }
@@ -188,8 +188,8 @@ function App() {
               }
             </>
           } />
-        <Route path='/hourly' element={<TwoDayHourlyForecast hourlyWeather={getData.hourly} date={getData.current.dt} timezone={getData.timezone} location={getData.location} unit={getData.units} />} />
-        <Route path='/daily' element={<EightDayForecast dailyWeather={getData.daily} date={getData.current.dt} timezone={getData.timezone} location={getData.location} unit={getData.units} />} />
+        <Route path='/hourly' element={<TwoDayHourlyForecast hourlyWeather={getData.hourly} timezone={getData.timezone} location={getData.location} unit={getData.units} />} />
+        <Route path='/daily' element={<EightDayForecast dailyWeather={getData.daily} timezone={getData.timezone} location={getData.location} unit={getData.units} />} />
         <Route path='/*'
           element={
             <div className='d-flex align-items-center justify-content-center vh-100' >

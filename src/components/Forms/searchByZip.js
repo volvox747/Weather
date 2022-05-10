@@ -14,38 +14,42 @@ export const ZipForm = (props) =>
     // passing the zip and country name to the api
     const handler=(e)=>
     {
+        // prevents the form from getting submitted
         e.preventDefault();
-        if(zip.length === 0 && (country.length===0 || country==="No Result Found"))
+        // if both are empty raise both errors
+        if(zip.length === 0 && country.length===0)
         {
-            console.log(zip.length,country);
             setZipError(true);
             setCountryError(true);
             return;
         }
-        else if (zip.length === 0 && (country.length !== 0 || country === "No Result Found"))
+        // if zip is empty raise zip error
+        else if (zip.length === 0 && country.length !== 0)
         {
             setZipError(true);
             return;
         }
-        else if (zip.length !== 0 && (country.length === 0 || country === "No Result Found"))
+        // if country is empty raise country error
+        else if (zip.length !== 0 && country.length === 0 )
         {
             setCountryError(true);
             return;
         }
         // get the country code with country name
-        const {iso2}=byCountry(country)
+        const {iso2}=byCountry(country);
         props.onGet(iso2,zip);
-        // setZip(zip);
-        // setCountry(country);
+
     }
     // autoComplete function
     const autoComplete = async (e) => {
         const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?types=country&autocomplete=true&access_token=pk.eyJ1IjoiYmVuc29uY3I3IiwiYSI6ImNsMGgxbHBwNjAyb3Qzb28yYno4ZzA1YWYifQ.JP1IaQwIySVQy5JZ8--aVg`);
         const data = await res.json();
+        // if the output array and input entered by the user are empty raise an error
         if(data.features.length===0 && data.query.length!==0)
         {
             setCountryError(true);
         }
+        // display the result from autocomplete api
         return setOptions(data.features)
     }
 
