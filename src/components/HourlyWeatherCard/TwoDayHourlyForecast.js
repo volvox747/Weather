@@ -2,8 +2,9 @@ import React from 'react'
 import Accordion from '../Accordion/Accordion';
 
 
-const TwoDayHourlyForecast = ({hourlyWeather,unit,date,location,timezone}) => 
+const TwoDayHourlyForecast = ({hourlyWeather,unit,date,location,timezone,a}) => 
 {
+  console.log(a);
   date = new Date(date.dt * 1000).toLocaleString('en-IN', {
     hour: '2-digit',
     minute: '2-digit',

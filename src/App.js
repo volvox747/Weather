@@ -134,13 +134,13 @@ function App() {
       })
     }),
     [])
+    console.log(errorAlert);
 
 
 
   return (
     <Fragment>
       <Navbar onUnitChange={metricChange} errorAlert={errorAlert===null&& true} />
-      {/* {errorAlert && <ErrorToast errorMsg={errorAlert} onCloseHandler={()=>setErrorAlert(null)}/>} */}
       <Routes>
         <Route path='/' element=
           {
@@ -177,25 +177,45 @@ function App() {
                 </div>
               </section>
               {
+                // display radar unless error is raised
                 errorAlert!==null ? null :
                   <div className={`container mb-5 ${isLoading === true && classes.spinner}`}>
-                    {(coordinates.length !== 0 && getData.location !== undefined) ?
-                      <>
-                        <h2 className='display-5 py-4'>Radar at {getData.location.split(',').slice(-1)}</h2>
-                        <Radar lat={coordinates[0]} lng={coordinates[1]} />
-                      </> : middleware}
+                    {
+                      // display radar after receiving location and coordinates as response from API
+                      (coordinates.length !== 0 && getData.location !== undefined) ?
+                        <>
+                          <h3 className='display-5 py-4'>Radar at {getData.location}</h3>
+                          <Radar lat={coordinates[0]} lng={coordinates[1]} />
+                        </> : middleware
+                    }
                   </div>
               }
             </>
           } />
-        <Route path='/hourly' element={<TwoDayHourlyForecast hourlyWeather={getData.hourly} timezone={getData.timezone} location={getData.location} unit={getData.units} />} />
-        <Route path='/daily' element={<EightDayForecast dailyWeather={getData.daily} timezone={getData.timezone} location={getData.location} unit={getData.units} />} />
+        
+        <Route path='/hourly' element=
+        {
+          (isLoading === false && Object.keys(getData).length > 1)?
+          <TwoDayHourlyForecast hourlyWeather={getData.hourly} timezone={getData.timezone} a={errorAlert} date={getData.current} location={getData.location} unit={getData.units} />
+          :<div className={`${isLoading === true && classes.spinner}`}>{middleware}</div>  
+        }/>
+        
+        <Route path='/daily' element=
+        {
+          (isLoading === false && Object.keys(getData).length > 1) ?
+          <EightDayForecast dailyWeather={getData.daily} date={getData.current} timezone={getData.timezone} location={getData.location} unit={getData.units} />
+          :<div className={`${isLoading === true && classes.spinner}`}>{middleware}</div>
+        }
+       />
+
+        
         <Route path='/*'
           element={
             <div className='d-flex align-items-center justify-content-center vh-100' >
               <ErrorModal errorMsg={{ cod: 404, message: "Page Not Found" }} />
             </div>
           } />
+
       </Routes>
       <Footer />
     </Fragment>

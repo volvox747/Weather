@@ -8,6 +8,7 @@ export const ZipForm = (props) =>
     const [zip, setZip] = useState('');
     const [country, setCountry] = useState('');
     const [zipError, setZipError] = useState(false);
+    const [isValidCountry, setIsValidCountry] = useState(false);
     const [countryError, setCountryError] = useState(false);
     // this state is used to display the autocomplete list
     const [options, setOptions] = useState([]);
@@ -20,20 +21,20 @@ export const ZipForm = (props) =>
         if(zip.length === 0 && country.length===0)
         {
             setZipError(true);
-            setCountryError(true);
-            return;
+            return setCountryError(true);
+            
         }
         // if zip is empty raise zip error
         else if (zip.length === 0 && country.length !== 0)
         {
-            setZipError(true);
-            return;
+            return setZipError(true);
+            
         }
         // if country is empty raise country error
         else if (zip.length !== 0 && country.length === 0 )
         {
-            setCountryError(true);
-            return;
+            return setCountryError(true);
+            
         }
         // get the country code with country name
         const {iso2}=byCountry(country);
@@ -47,9 +48,11 @@ export const ZipForm = (props) =>
         // if the output array and input entered by the user are empty raise an error
         if(data.features.length===0 && data.query.length!==0)
         {
-            setCountryError(true);
+            setIsValidCountry(true);
         }
-        // display the result from autocomplete api
+        else setIsValidCountry(false);
+        
+        // display the result from autocomplete API
         return setOptions(data.features)
     }
 
@@ -61,7 +64,14 @@ export const ZipForm = (props) =>
                 {zipError===true && <p style={{color:'red'}}>Please enter valid zipcode</p>}           
                 <label htmlFor='country' className="form-label">Country</label>
                 <input id="country" type={'text'} className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{setCountryError(false);autoComplete(e);setCountry(e.target.value)}} autoComplete="off" value={country}/>
-                {countryError===true && <p style={{color:'red'}}>Please enter country</p>}           
+                {
+                    countryError===true && 
+                    <p style={{color:'red'}}>Please enter country</p>
+                }
+                {
+                    isValidCountry===true && 
+                    <p style={{color:'red'}}>Please provide a valid Country</p>
+                }           
                 {
                     options.length!==0 && 
                     <ul className={`card text-dark ${classes['option-list']}`}>
