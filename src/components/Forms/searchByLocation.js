@@ -10,20 +10,25 @@ const LocationForm = (props) =>
     const [coordinates, setCoordinates] = useState([]);
     // this state is used to display the autocomplete list
     const [options, setOptions] = useState([]);
-    
+    // this state is used to raise error when the input fields are empty when form is submitted
     const [error,setError]=useState(false);
+    // this state is used to raise error when the entered location is inValid
+    const [isValidLocation,setIsValidLocation]=useState(false);
+    
     // form submit handler
     const handler=(e)=>
     {
         // to prevent the page from reloading
         e.preventDefault();
-        if(location.trim.length===0)
+        // raise error if input field is empty
+        if(location.length===0)
         {
             return setError(true);  
         } 
         // passing the data to the weather data getter function
         props.onGet(location,coordinates);
     }
+    
     // autoComplete function
     const autoComplete=async(e)=>
     {
@@ -31,8 +36,9 @@ const LocationForm = (props) =>
         const data=await res.json();
         if (data.features.length === 0 && data.query.length !== 0) 
         {
-            setError(true);
+            setIsValidLocation(true);
         }
+        else setIsValidLocation(false);
         return setOptions(data.features)
     }
     
@@ -41,13 +47,16 @@ const LocationForm = (props) =>
         <form onSubmit={handler} className="d-inline" autoComplete={'off'}>
             <label  htmlFor='location' className="form-label">Location</label>
             <input type={'text'} id="location" className={`form-control ${options.length===0 && "mb-3"}`} onChange={(e)=>{setError(false); autoComplete(e); setLocation(e.target.value)}} autoComplete={`off`} value={location} />
-
             {
                 error===true &&
                 // error message 
                 <p style={{color:'red'}}>Please enter location</p>
             }
-
+            {
+                isValidLocation===true &&
+                // invalid location message 
+                <p style={{color:'red'}}>Please enter valid location</p>
+            }
             {
                 // if result length != to 0 display the result
                 options.length!==0 && 

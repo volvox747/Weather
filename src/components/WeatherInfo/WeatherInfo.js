@@ -21,7 +21,7 @@ const WeatherInfo = ({data}) =>
                   
                     <p className='d-flex justify-content-between mb-4'>Visibility: <span>{Math.round(data.current.visibility/1000)} km/h</span></p>
                   
-                    <p className='d-flex justify-content-between mb-4'>Pressure: <span>{data.current.pressure}</span></p>
+                    <p className='d-flex justify-content-between mb-4'>Pressure: <span>{data.current.pressure} mb</span></p>
                   
                     <p className='d-flex justify-content-between mb-4'>UV Index: <span>{uvi}</span></p>
                   
